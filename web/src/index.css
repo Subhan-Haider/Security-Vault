@@ -1,0 +1,96 @@
+:root {
+  /* Core Colors (HSL) */
+  --bg-primary: 222 47% 11%;     /* Deep matte slate/black */
+  --bg-secondary: 217 33% 17%;   /* Lighter slate for cards */
+  --bg-tertiary: 215 28% 22%;    /* For hovers */
+  
+  --text-primary: 210 40% 98%;   /* Bright white */
+  --text-secondary: 215 20% 65%; /* Muted slate */
+  --text-muted: 215 16% 47%;
+  
+  /* Accents */
+  --accent-cyan: 189 94% 43%;    /* Vibrant cyan */
+  --accent-indigo: 239 84% 67%;  /* Deep indigo */
+  --accent-red: 0 84% 60%;       /* Error/destructive */
+  --accent-green: 142 71% 45%;   /* Success/unlock */
+
+  /* Structural */
+  --border-subtle: hsla(210, 40%, 98%, 0.1);
+  --border-focus: hsla(189, 94%, 43%, 0.5);
+  
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Shadows & Glows */
+  --shadow-card: 0 4px 6px -1px hsla(0, 0%, 0%, 0.5), 0 2px 4px -1px hsla(0, 0%, 0%, 0.3);
+  --glow-cyan: 0 0 15px hsla(189, 94%, 43%, 0.3);
+  --glow-indigo: 0 0 15px hsla(239, 84%, 67%, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: hsl(var(--bg-primary));
+  color: hsl(var(--text-primary));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: hsl(var(--text-primary));
+}
+
+button {
+  font-family: var(--font-sans);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+input, textarea {
+  font-family: var(--font-sans);
+}
+
+/* Base utility classes to simulate some utility-first workflow */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, hsl(var(--accent-cyan)), hsl(var(--accent-indigo)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass-panel {
+  background: hsla(var(--bg-secondary), 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}

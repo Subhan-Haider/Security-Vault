@@ -41,7 +41,7 @@ class VaultRepository @Inject constructor(
                 encryptionManager.encryptFile(tempThumb, thumbFile)
                 tempThumb.delete()
             }
-        } catch (e: Throwable) { e.printStackTrace() } // Catch all (including OOM) to fail gracefully
+        } catch (e: Throwable) { e.printStackTrace() }
         // ------------------------------------------------
 
         val finalOriginalPath = originalPath ?: originalFile.absolutePath
@@ -78,11 +78,6 @@ class VaultRepository @Inject constructor(
     suspend fun saveNote(note: VaultNote) = dao.saveNote(note)
     suspend fun deleteNote(note: VaultNote) = dao.deleteNote(note)
     fun getAllNotes(): Flow<List<VaultNote>> = dao.getAllNotes()
-
-    // Cloned Apps
-    fun getAllClonedApps(): Flow<List<ClonedApp>> = dao.getAllClonedApps()
-    suspend fun saveClonedApp(app: ClonedApp) = dao.saveClonedApp(app)
-    suspend fun deleteClonedApp(app: ClonedApp) = dao.deleteClonedApp(app)
 
     suspend fun decryptFileForShare(encryptedFile: File, outputFile: File) = withContext(Dispatchers.IO) {
         encryptionManager.decryptFile(encryptedFile, outputFile)

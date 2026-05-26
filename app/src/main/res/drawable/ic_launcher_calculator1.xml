@@ -1,43 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Adaptive icon foreground for the calculator disguise -->
+<!-- This is the foreground layer (the button grid + cyan equals) -->
+<!-- The background is defined separately and is pure #1A1C22 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    
-    <!-- Background: Standard Material Blue -->
+
+    <!-- === DISPLAY BAR === -->
     <path
-        android:fillColor="#1A73E8"
-        android:pathData="M0,0h108v108h-108z" />
-        
-    <!-- Calculator Grid (White) -->
+        android:fillColor="#22252D"
+        android:pathData="M14,14 L94,14 L94,30 L14,30 Z" />
     <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M24,24h20v20H24z M64,24h20v20H64z M24,64h20v20H24z M64,64h20v20H64z" />
-        
-    <!-- Symbols (Simple Lines) -->
-    <!-- PLUS -->
+        android:fillColor="#2E3342"
+        android:pathData="M14,28.5 L94,28.5 L94,30 L14,30 Z" />
+    <!-- Dot cluster: decimals/mode indicator -->
     <path
-        android:strokeColor="#1A73E8"
-        android:strokeWidth="2"
-        android:pathData="M34,28v12 M28,34h12" />
-        
-    <!-- MINUS -->
+        android:fillColor="#4B5563"
+        android:pathData="M81,20 a2.5,2.5 0,1,0 5,0 a2.5,2.5 0,1,0 -5,0" />
     <path
-        android:strokeColor="#1A73E8"
-        android:strokeWidth="2"
-        android:pathData="M68,34h12" />
-        
-    <!-- MULTIPLY -->
-    <path
-        android:strokeColor="#1A73E8"
-        android:strokeWidth="2"
-        android:pathData="M28,68l12,12 M40,68l-12,12" />
-        
-    <!-- EQUALS -->
-    <path
-        android:strokeColor="#1A73E8"
-        android:strokeWidth="2"
-        android:pathData="M68,70h12 M68,78h12" />
-        
+        android:fillColor="#374151"
+        android:pathData="M72,21 a1.5,1.5 0,1,0 3,0 a1.5,1.5 0,1,0 -3,0" />
+
+    <!-- === BUTTON ROWS (4 rows × 4 cols) === -->
+
+    <!-- Row 1 -->
+    <path android:fillColor="#1E2129" android:pathData="M14,33 L27,33 L27,45 L14,45 Z" />
+    <path android:fillColor="#1E2129" android:pathData="M30,33 L43,33 L43,45 L30,45 Z" />
+    <path android:fillColor="#1E2129" android:pathData="M46,33 L59,33 L59,45 L46,45 Z" />
+    <path android:fillColor="#232732" android:pathData="M62,33 L75,33 L75,45 L62,45 Z" />
+
+    <!-- Row 1 symbols: %, CE, C, ÷ -->
+    <path android:fillColor="#6B7280" android:pathData="M17.5,41.5 L22.5,36.5 M17.5,39 a1,1 0,1,0 2,0 a1,1 0,1,0 -2,0 M20.5,40 a1,1 0,1,0 2,0 a1,1 0,1,0 -2,0" />
+    <path android:fillColor="#6B7280" android:pathData="M33,38 L41,38 M33,41 L39,41" />
+    <path android:fillColor="#9CA3AF" android:pathData="M55,37 Q52,34.5 49,38 Q47.5,40.5 49.5,43 Q52.5,45 55,43" />
+    <path android:fillColor="#9CA3AF" android:pathData="M65,39 L72,39 M68,35.5 a1.2,1.2 0,1,0 2.4,0 a1.2,1.2 0,1,0 -2.4,0 M68,41.5 a1.2,1.2 0,1,0 2.4,0 a1.2,1.2 0,1,0 -2.4,0" />
+
+    <!-- Row 2 -->
+    <path android:fillColor="#1E2129" android:pathData="M14,48 L27,48 L27,60 L14,60 Z" />
+    <path android:fillColor="#1E2129" android:pathData="M30,48 L43,48 L43,60 L30,60 Z" />
+    <path android:fillColor="#1E2129" android:pathData="M46,48 L59,48 L59,60 L46,60 Z" />
+    <path android:fillColor="#232732" android:pathData="M62,48 L75,48 L75,60 L62,60 Z" />
+
+    <!-- Row 2 symbols: 7, 8, 9, × -->
+    <path android:fillColor="#D1D5DB" android:pathData="M17,52 L22,52 L18,59" />
+    <path android:fillColor="#D1D5DB" android:pathData="M33,52 Q35.5,50 38,52 Q35.5,55 33,57 Q35.5,59.5 38,57 Q40.5,55 38,52" />
+    <path android:fillColor="#D1D5DB" android:pathData="M50,52 Q52.5,50 55,52 Q57,54 55,57 Q52.5,59 50,57 L50,52" />
+    <path android:fillColor="#9CA3AF" android:pathData="M65,51 L72,58 M72,51 L65,58" />
+
+    <!-- Row 3 -->
+    <path android:fillColor="#1E2129" android:pathData="M14,63 L27,63 L27,75 L14,75 Z" />
+    <path android:fillColor="#1E2129" android:pathData="M30,63 L43,63 L43,75 L30,75 Z" />
+    <path android:fillColor="#1E2129" android:pathData="M46,63 L59,63 L59,75 L46,75 Z" />
+    <path android:fillColor="#232732" android:pathData="M62,63 L75,63 L75,75 L62,75 Z" />
+
+    <!-- Row 3 symbols: 4, 5, 6, − -->
+    <path android:fillColor="#D1D5DB" android:pathData="M18,67 L15.5,72 L21.5,72 M20,67 L20,74" />
+    <path android:fillColor="#D1D5DB" android:pathData="M33,67 L37,67 L33,70.5 Q33,75 38,73" />
+    <path android:fillColor="#D1D5DB" android:pathData="M55,67 Q51,67 51,71 Q51,75 55,75 Q59,75 59,71 Q59,67 55,67" />
+    <path android:fillColor="#9CA3AF" android:pathData="M64.5,69 L73,69" />
+
+    <!-- Row 4 -->
+    <path android:fillColor="#1E2129" android:pathData="M14,78 L27,78 L27,90 L14,90 Z" />
+    <path android:fillColor="#1E2129" android:pathData="M30,78 L43,78 L43,90 L30,90 Z" />
+    <path android:fillColor="#1E2129" android:pathData="M46,78 L59,78 L59,90 L46,90 Z" />
+    <path android:fillColor="#232732" android:pathData="M62,78 L75,78 L75,90 L62,90 Z" />
+
+    <!-- Row 4 symbols: 1, 2, 3, + -->
+    <path android:fillColor="#D1D5DB" android:pathData="M19,82 L20.5,82 L20.5,89" />
+    <path android:fillColor="#D1D5DB" android:pathData="M33,82 Q36.5,80 40,82 Q42,84.5 36.5,88 L33,90 L41,90" />
+    <path android:fillColor="#D1D5DB" android:pathData="M50,82 Q53.5,80 57,82 Q59,84 56,86 Q60,88 57,90 Q53.5,92 50,90" />
+    <path android:fillColor="#9CA3AF" android:pathData="M68.5,82 L68.5,88 M65.5,85 L71.5,85" />
+
+    <!-- === EQUALS ACCENT BUTTON === -->
+    <!-- Outer glow layer -->
+    <path android:fillColor="#3300D4E8" android:pathData="M78,77 L96,77 L96,95 L78,95 Z" />
+    <!-- Main button body: cyber cyan -->
+    <path android:fillColor="#00BCD4" android:pathData="M79,78 L95,78 L95,94 L79,94 Z" />
+    <!-- Specular highlight (top-left inner brightness) -->
+    <path android:fillColor="#1AFFFFFF" android:pathData="M79,78 L95,78 L79,94 Z" />
+    <!-- = symbol (two crisp white bars) -->
+    <path android:fillColor="#FFFFFF" android:pathData="M82.5,83.5 L91.5,83.5 L91.5,85.5 L82.5,85.5 Z" />
+    <path android:fillColor="#FFFFFF" android:pathData="M82.5,87.5 L91.5,87.5 L91.5,89.5 L82.5,89.5 Z" />
+
+    <!-- === SUBTLE GRID LINES === -->
+    <path android:fillColor="#0FFFFFFF" android:pathData="M28,33 L28,90 L28.5,90 L28.5,33 Z" />
+    <path android:fillColor="#0FFFFFFF" android:pathData="M44,33 L44,90 L44.5,90 L44.5,33 Z" />
+    <path android:fillColor="#0FFFFFFF" android:pathData="M60,33 L60,90 L60.5,90 L60.5,33 Z" />
+    <path android:fillColor="#0FFFFFFF" android:pathData="M14,46 L75,46 L75,46.5 L14,46.5 Z" />
+    <path android:fillColor="#0FFFFFFF" android:pathData="M14,61 L75,61 L75,61.5 L14,61.5 Z" />
+    <path android:fillColor="#0FFFFFFF" android:pathData="M14,76 L75,76 L75,76.5 L14,76.5 Z" />
+
 </vector>

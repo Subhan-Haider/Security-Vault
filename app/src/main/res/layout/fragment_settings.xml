@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Smart Security"
-            android:textColor="#FF9F0A"
+            android:textColor="@color/accent_orange"
             android:textSize="14sp"
             android:textStyle="bold"
             android:textAllCaps="true"
@@ -38,7 +38,7 @@
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
             app:strokeWidth="1dp"
-            app:strokeColor="#1E293B"
+            app:strokeColor="@color/card_stroke_color"
             android:layout_marginBottom="24dp">
 
             <LinearLayout
@@ -60,7 +60,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@android:drawable/ic_menu_recent_history"
-                        app:tint="#FF9F0A" />
+                        app:tint="@color/accent_orange" />
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -79,12 +79,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Lock vault when you switch away"
-                            android:textColor="#8E8E93"
+                            android:textColor="@color/on_surface_secondary"
                             android:textSize="12sp"/>
                     </LinearLayout>
                 </LinearLayout>
 
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#2C2C2E" />
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_color" />
 
                 <!-- Max Failed Attempts -->
                 <LinearLayout
@@ -100,7 +100,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@android:drawable/ic_dialog_alert"
-                        app:tint="#FF453A" />
+                        app:tint="@color/accent_red" />
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -119,7 +119,47 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Lock vault after too many wrong PINs"
-                            android:textColor="#8E8E93"
+                            android:textColor="@color/on_surface_secondary"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_color" />
+
+                <!-- Sensor Security Mode -->
+                <LinearLayout
+                    android:id="@+id/btnSensorSecurity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/ic_lock_power_off"
+                        app:tint="@color/accent_cyan" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sensor Security Mode"
+                            android:textColor="@color/on_surface"
+                            android:textSize="16sp"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:id="@+id/tvSensorSecurityStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Auto-lock via shake, proximity, or screen off"
+                            android:textColor="@color/on_surface_secondary"
                             android:textSize="12sp"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -146,7 +186,7 @@
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
             app:strokeWidth="1dp"
-            app:strokeColor="#1E293B"
+            app:strokeColor="@color/card_stroke_color"
             android:layout_marginBottom="24dp">
 
             <LinearLayout
@@ -188,12 +228,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Reset Master and Decoy passwords"
-                            android:textColor="#8E8E93"
+                            android:textColor="@color/on_surface_secondary"
                             android:textSize="12sp"/>
                     </LinearLayout>
                 </LinearLayout>
 
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1E293B" android:layout_marginStart="60dp" />
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_color" android:layout_marginStart="60dp" />
 
                 <!-- Manage Locked Apps -->
                 <LinearLayout
@@ -210,7 +250,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@android:drawable/ic_secure"
-                        app:tint="#32ADE6" />
+                        app:tint="@color/accent_cyan" />
                         
                     <LinearLayout
                         android:layout_width="0dp"
@@ -229,7 +269,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Require PIN to open specific apps"
-                            android:textColor="#8E8E93"
+                            android:textColor="@color/on_surface_secondary"
                             android:textSize="12sp"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -238,7 +278,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#2C2C2E" />
+                    android:background="@color/divider_color" />
 
                 <LinearLayout
                     android:id="@+id/btnSmartLock"
@@ -254,7 +294,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@android:drawable/ic_dialog_map"
-                        app:tint="#BF5AF2" />
+                        app:tint="@color/accent_purple" />
                         
                     <LinearLayout
                         android:layout_width="0dp"
@@ -273,7 +313,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Keep locked apps open when at home"
-                            android:textColor="#8E8E93"
+                            android:textColor="@color/on_surface_secondary"
                             android:textSize="12sp"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -287,7 +327,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Disguise"
-            android:textColor="#34C759"
+            android:textColor="@color/accent_green"
             android:textSize="14sp"
             android:textStyle="bold"
             android:textAllCaps="true"
@@ -300,13 +340,54 @@
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
             app:strokeWidth="1dp"
-            app:strokeColor="#1E293B"
+            app:strokeColor="@color/card_stroke_color"
             android:layout_marginBottom="24dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/btnSafeMode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center_vertical">
+                    
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/ic_secure"
+                        app:tint="@color/accent_green" />
+                        
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Safe Mode (Decoy Vault)"
+                            android:textColor="@color/on_surface"
+                            android:textSize="16sp"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:id="@+id/tvSafeModeStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Status"
+                            android:textColor="@color/on_surface_secondary"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider_color" android:layout_marginStart="60dp" />
 
                 <LinearLayout
                     android:id="@+id/btnChangeIcon"
@@ -322,7 +403,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@android:drawable/ic_menu_edit"
-                        app:tint="#34C759" />
+                        app:tint="@color/accent_green" />
                         
                     <LinearLayout
                         android:layout_width="0dp"
@@ -341,7 +422,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Change how the app looks on your home screen"
-                            android:textColor="#8E8E93"
+                            android:textColor="@color/on_surface_secondary"
                             android:textSize="12sp"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -353,7 +434,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Defense"
-            android:textColor="#FF453A"
+            android:textColor="@color/accent_red"
             android:textSize="14sp"
             android:textStyle="bold"
             android:textAllCaps="true"
@@ -366,7 +447,7 @@
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
             app:strokeWidth="1dp"
-            app:strokeColor="#1E293B"
+            app:strokeColor="@color/card_stroke_color"
             android:layout_marginBottom="24dp">
 
             <LinearLayout
@@ -389,7 +470,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@android:drawable/ic_menu_camera"
-                        app:tint="#FF453A" />
+                        app:tint="@color/accent_red" />
                         
                     <LinearLayout
                         android:layout_width="0dp"
@@ -408,7 +489,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="View photos of failed unlock attempts"
-                            android:textColor="#8E8E93"
+                            android:textColor="@color/on_surface_secondary"
                             android:textSize="12sp"/>
                     </LinearLayout>
                 </LinearLayout>

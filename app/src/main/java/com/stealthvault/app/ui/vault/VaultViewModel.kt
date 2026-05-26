@@ -68,13 +68,6 @@ class VaultViewModel @Inject constructor(
     ) { notes, isDecoyMode ->
         if (isDecoyMode) emptyList() else notes
     }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
-        
-    val clonedApps: StateFlow<List<ClonedApp>> = combine(
-        repository.getAllClonedApps(),
-        _isDecoy
-    ) { apps, isDecoyMode ->
-        if (isDecoyMode) emptyList() else apps
-    }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     fun importFile(context: Context, uri: Uri) = viewModelScope.launch {
         val type = context.contentResolver.getType(uri)?.lowercase() ?: ""
@@ -90,11 +83,9 @@ class VaultViewModel @Inject constructor(
             else -> "Document"
         }
         
-        // Try to get original path and name
         val originalName = queryFileName(context, uri)
         val originalPath = getUriPath(context, uri)
         
-        // Copy to temp file then hide
         val tempFile = File(context.cacheDir, "temp_import_${System.currentTimeMillis()}")
         context.contentResolver.openInputStream(uri)?.use { input ->
             FileOutputStream(tempFile).use { output ->
@@ -119,7 +110,6 @@ class VaultViewModel @Inject constructor(
 
     private fun getUriPath(context: Context, uri: Uri): String? {
         if (uri.scheme == "file") return uri.path
-        // For content URIs, we'll store a sensible default restore loc if we can't find better
         val fileName = queryFileName(context, uri) ?: "restored_file"
         val downloadDir = android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS)
         return File(downloadDir, fileName).absolutePath
@@ -135,12 +125,7 @@ class VaultViewModel @Inject constructor(
         repository.saveNote(VaultNote(id = id, title = title, content = content, category = category))
     }
     fun deleteNote(note: VaultNote) = viewModelScope.launch { repository.deleteNote(note) }
-    
-    fun cloneApp(packageName: String, label: String) = viewModelScope.launch {
-        repository.saveClonedApp(ClonedApp(packageName, label, label))
-    }
-    fun deleteClonedApp(app: ClonedApp) = viewModelScope.launch { repository.deleteClonedApp(app) }
-    
+
     /**
      * Prepare a file for secure sharing by decrypting it to a temporary, private folder.
      */

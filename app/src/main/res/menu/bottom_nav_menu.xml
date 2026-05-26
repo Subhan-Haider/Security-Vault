@@ -9,10 +9,6 @@
         android:icon="@android:drawable/ic_menu_edit"
         android:title="Notes" />
     <item
-        android:id="@+id/clonerFragment"
-        android:icon="@android:drawable/ic_menu_share"
-        android:title="Dual Apps" />
-    <item
         android:id="@+id/browserFragment"
         android:icon="@android:drawable/ic_menu_search"
         android:title="Web" />

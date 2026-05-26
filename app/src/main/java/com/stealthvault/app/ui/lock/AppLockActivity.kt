@@ -1,8 +1,12 @@
 package com.stealthvault.app.ui.lock
 
 import android.os.Bundle
-import android.widget.Toast
+import android.os.Vibrator
+import android.os.VibrationEffect
+import android.os.Build
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import com.stealthvault.app.R
 import com.stealthvault.app.databinding.ActivityAppLockBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -76,10 +80,25 @@ class AppLockActivity : AppCompatActivity() {
             // Success! Unlock the app and clean up
             finish()
         } else {
-            android.widget.Toast.makeText(this, "Security Violation: Incorrect PIN", android.widget.Toast.LENGTH_SHORT).show()
+            // Shake the card view for silent incorrect feedback
+            val shake = AnimationUtils.loadAnimation(this, R.anim.shake)
+            binding.cvPinPad.startAnimation(shake)
+
+            // Subtle vibration feedback
+            try {
+                val vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    vibrator.vibrate(VibrationEffect.createWaveform(
+                        longArrayOf(0, 60, 60, 60), -1
+                    ))
+                } else {
+                    @Suppress("DEPRECATION")
+                    vibrator.vibrate(longArrayOf(0, 60, 60, 60), -1)
+                }
+            } catch (_: Exception) {}
+
             enteredPin = ""
             updateDots()
-            // Optional: Log intruder attempt?
         }
     }
 

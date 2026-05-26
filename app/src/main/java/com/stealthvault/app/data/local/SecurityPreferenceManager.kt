@@ -12,11 +12,19 @@ class SecurityPreferenceManager @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
 
-    private lateinit var prefs: android.content.SharedPreferences
-
-    init {
+    private val prefs: android.content.SharedPreferences by lazy {
         try {
-            initPrefs()
+            val masterKey = MasterKey.Builder(context)
+                .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                .build()
+            
+            androidx.security.crypto.EncryptedSharedPreferences.create(
+                context,
+                "secure_prefs",
+                masterKey,
+                androidx.security.crypto.EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                androidx.security.crypto.EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            )
         } catch (e: Throwable) {
             try {
                 val keyStore = java.security.KeyStore.getInstance("AndroidKeyStore")
@@ -25,32 +33,30 @@ class SecurityPreferenceManager @Inject constructor(
             } catch (ignored: Throwable) {}
 
             context.getSharedPreferences("secure_prefs", Context.MODE_PRIVATE).edit().clear().commit()
+            
             try {
-                initPrefs()
+                val fallbackKey = MasterKey.Builder(context)
+                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                    .build()
+                androidx.security.crypto.EncryptedSharedPreferences.create(
+                    context,
+                    "secure_prefs",
+                    fallbackKey,
+                    androidx.security.crypto.EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                    androidx.security.crypto.EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+                )
             } catch (fatal: Throwable) {
                 // Graceful degradation for devices with permanently broken Keystores
-                prefs = context.getSharedPreferences("fallback_prefs", Context.MODE_PRIVATE)
+                context.getSharedPreferences("fallback_prefs", Context.MODE_PRIVATE)
             }
         }
-    }
-
-    private fun initPrefs() {
-        val masterKey = MasterKey.Builder(context)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-            .build()
-        
-        prefs = androidx.security.crypto.EncryptedSharedPreferences.create(
-            context,
-            "secure_prefs",
-            masterKey,
-            androidx.security.crypto.EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            androidx.security.crypto.EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
     }
 
     companion object {
         private const val KEY_PIN = "master_pin"
         private const val KEY_DECOY_PIN = "decoy_pin"
+        private const val KEY_DECOY_ENABLED = "decoy_enabled"
+        private const val KEY_SENSOR_SECURITY = "sensor_security"
         private const val KEY_IS_SETUP_COMPLETE = "is_setup_complete"
         const val TIMEOUT_IMMEDIATE = 0L
         const val TIMEOUT_30S = 30_000L
@@ -65,7 +71,21 @@ class SecurityPreferenceManager @Inject constructor(
 
     var decoyPin: String?
         get() = prefs.getString(KEY_DECOY_PIN, null)
-        set(value) = prefs.edit().putString(KEY_DECOY_PIN, value).apply()
+        set(value) {
+            prefs.edit().putString(KEY_DECOY_PIN, value).apply()
+        }
+
+    var isDecoyEnabled: Boolean
+        get() = prefs.getBoolean(KEY_DECOY_ENABLED, true)
+        set(value) {
+            prefs.edit().putBoolean(KEY_DECOY_ENABLED, value).apply()
+        }
+
+    var isSensorSecurityEnabled: Boolean
+        get() = prefs.getBoolean(KEY_SENSOR_SECURITY, false)
+        set(value) {
+            prefs.edit().putBoolean(KEY_SENSOR_SECURITY, value).apply()
+        }
 
     var isSetupComplete: Boolean
         get() = prefs.getBoolean(KEY_IS_SETUP_COMPLETE, false)

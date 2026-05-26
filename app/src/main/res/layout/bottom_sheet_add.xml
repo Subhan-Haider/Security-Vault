@@ -13,7 +13,7 @@
         android:layout_height="4dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="24dp"
-        android:background="#DDDDDD" />
+        android:background="@color/divider_color" />
 
     <TextView
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         app:strokeWidth="1dp"
-        app:strokeColor="#F0F0F0"
+        app:strokeColor="@color/card_stroke_color"
         android:layout_marginBottom="12dp"
         android:clickable="true"
         android:focusable="true">
@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Import encrypted pictures safely"
-                    android:textColor="#8E8E93"
+                    android:textColor="@color/on_surface_secondary"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -80,7 +80,7 @@
                 android:layout_height="24dp"
                 android:src="@android:drawable/arrow_up_float"
                 android:rotation="90"
-                app:tint="#D1D1D6" />
+                app:tint="@color/on_surface_secondary" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -91,7 +91,7 @@
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         app:strokeWidth="1dp"
-        app:strokeColor="#F0F0F0"
+        app:strokeColor="@color/card_stroke_color"
         android:layout_marginBottom="12dp"
         android:clickable="true"
         android:focusable="true">
@@ -109,7 +109,7 @@
                 android:padding="8dp"
                 android:background="@drawable/bg_icon_circle"
                 android:src="@android:drawable/ic_menu_camera"
-                app:tint="#FF453A" />
+                app:tint="@color/accent_red" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -130,7 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Encrypt large video files instantly"
-                    android:textColor="#8E8E93"
+                    android:textColor="@color/on_surface_secondary"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -139,7 +139,7 @@
                 android:layout_height="24dp"
                 android:src="@android:drawable/arrow_up_float"
                 android:rotation="90"
-                app:tint="#D1D1D6" />
+                app:tint="@color/on_surface_secondary" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -150,7 +150,7 @@
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         app:strokeWidth="1dp"
-        app:strokeColor="#F0F0F0"
+        app:strokeColor="@color/card_stroke_color"
         android:clickable="true"
         android:focusable="true">
 
@@ -167,7 +167,7 @@
                 android:padding="8dp"
                 android:background="@drawable/bg_icon_circle"
                 android:src="@android:drawable/ic_menu_edit"
-                app:tint="#32ADE6" />
+                app:tint="@color/accent_cyan" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -188,7 +188,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Create encrypted memos and pads"
-                    android:textColor="#8E8E93"
+                    android:textColor="@color/on_surface_secondary"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -197,7 +197,7 @@
                 android:layout_height="24dp"
                 android:src="@android:drawable/arrow_up_float"
                 android:rotation="90"
-                app:tint="#D1D1D6" />
+                app:tint="@color/on_surface_secondary" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 

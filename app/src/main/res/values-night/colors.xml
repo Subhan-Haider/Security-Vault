@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Premium Dark/Night Palette -->
-    <color name="primary">#A78BFA</color> <!-- Lightened Violet for OLED -->
-    <color name="primary_variant">#7C3AED</color>
-    <color name="secondary">#34D399</color> <!-- Emerald 400 -->
-    <color name="background">#020617</color> <!-- Midnight Deep Blue 950 -->
-    <color name="surface">#0F172A</color> <!-- Slate 900 -->
-    <color name="on_surface">#F1F5F9</color> <!-- Slate 100 -->
-    <color name="on_surface_secondary">#94A3B8</color> <!-- Slate 400 -->
+    <!-- Premium Dark/Night Palette (Obsidian/Stealth Cybersecurity Style) -->
+    <color name="primary">#818CF8</color> <!-- Cyber Electric Indigo -->
+    <color name="primary_variant">#4F46E5</color>
+    <color name="secondary">#00E5FF</color> <!-- Cyber Cyan -->
+    <color name="background">#0D0F14</color> <!-- Midnight Obsidian Charcoal -->
+    <color name="surface">#161B26</color> <!-- Elevated dark gray-slate -->
+    <color name="on_surface">#F8FAFC</color> <!-- Slate 50 (Crisp Off-White) -->
+    <color name="on_surface_secondary">#94A3B8</color> <!-- Slate 400 (Muted Secondary) -->
     <color name="error">#F87171</color>
     
-    <!-- Calculator Disguise (OLED Optimized) -->
-    <color name="calc_display_bg">#020617</color>
-    <color name="calc_button_number">#F1F5F9</color>
-    <color name="calc_button_operator">#8B5CF6</color>
-    <color name="calc_button_special">#1E293B</color>
+    <!-- Calculator Disguise (Realistic Dark Theme) -->
+    <color name="calc_display_bg">#0D0F14</color>
+    <color name="calc_button_number">#1D2433</color> <!-- Sleek Dark Slate Keys -->
+    <color name="calc_button_operator">#FF9F0A</color> <!-- Realistic Operator Orange -->
+    <color name="calc_button_special">#2D3748</color> <!-- Medium Slate Actions -->
 
     <color name="transparent_black">#CC000000</color>
     <color name="glass_black">#88000000</color>
+
+    <!-- Semantic UI Tokens -->
+    <color name="divider_color">#20293A</color>
+    <color name="card_stroke_color">#20293A</color>
+    <color name="icon_bg_color">#212838</color>
+    <color name="accent_orange">#FF9F0A</color>
+    <color name="accent_red">#FF453A</color>
+    <color name="accent_blue">#0A84FF</color>
+    <color name="accent_cyan">#64D2FF</color>
+    <color name="accent_purple">#BF5AF2</color>
+    <color name="accent_green">#30D158</color>
 </resources>

@@ -73,6 +73,31 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 .show()
         }
 
+        val tvSensorSecurityStatus = view.findViewById<android.widget.TextView>(R.id.tvSensorSecurityStatus)
+        fun refreshSensorStatus() {
+            tvSensorSecurityStatus?.text = if (securityPrefs.isSensorSecurityEnabled) {
+                "Enabled (Shake, Proximity, Screen Off)"
+            } else {
+                "Disabled (Battery friendly)"
+            }
+        }
+        refreshSensorStatus()
+
+        view.findViewById<View>(R.id.btnSensorSecurity)?.setOnClickListener {
+            val options = arrayOf("Enabled", "Disabled")
+            val selectedItem = if (securityPrefs.isSensorSecurityEnabled) 0 else 1
+            com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Sensor Security Mode")
+                .setSingleChoiceItems(options, selectedItem) { dialog, which ->
+                    val isEnabled = which == 0
+                    securityPrefs.isSensorSecurityEnabled = isEnabled
+                    refreshSensorStatus()
+                    dialog.dismiss()
+                    Toast.makeText(requireContext(), "Sensor Security ${if(isEnabled) "Enabled" else "Disabled"}", Toast.LENGTH_SHORT).show()
+                }
+                .show()
+        }
+
         view.findViewById<View>(R.id.btnChangePin).setOnClickListener {
             securityPrefs.masterPin = null
             securityPrefs.decoyPin = null
@@ -89,6 +114,37 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         view.findViewById<View>(R.id.btnViewIntruderLogs).setOnClickListener {
             androidx.navigation.fragment.NavHostFragment.findNavController(this)
                 .navigate(R.id.intruderLogsFragment)
+        }
+
+        // --- Disguise Section ---
+        val tvSafeModeStatus = view.findViewById<android.widget.TextView>(R.id.tvSafeModeStatus)
+        fun refreshSafeModeStatus() {
+            tvSafeModeStatus?.text = if (securityPrefs.isDecoyEnabled) {
+                "Enabled - Fake vault active"
+            } else {
+                "Disabled - Only master PIN is used"
+            }
+        }
+        refreshSafeModeStatus()
+
+        view.findViewById<View>(R.id.btnSafeMode)?.setOnClickListener {
+            val options = arrayOf("Enabled", "Disabled")
+            val selectedItem = if (securityPrefs.isDecoyEnabled) 0 else 1
+            com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Safe Mode (Decoy Vault)")
+                .setSingleChoiceItems(options, selectedItem) { dialog, which ->
+                    val isEnabled = which == 0
+                    securityPrefs.isDecoyEnabled = isEnabled
+                    
+                    // If disabled, we might want to clear the decoy pin?
+                    // Actually let's just leave it there in case they turn it back on.
+                    // But if it's the first time and they never set it, it's null.
+                    
+                    refreshSafeModeStatus()
+                    dialog.dismiss()
+                    Toast.makeText(requireContext(), "Safe Mode ${if(isEnabled) "Enabled" else "Disabled"}", Toast.LENGTH_SHORT).show()
+                }
+                .show()
         }
 
         view.findViewById<View>(R.id.btnChangeIcon)?.setOnClickListener {

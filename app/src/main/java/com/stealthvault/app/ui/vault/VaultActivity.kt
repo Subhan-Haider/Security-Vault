@@ -10,8 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.stealthvault.app.R
 import com.stealthvault.app.databinding.ActivityVaultBinding
-import com.stealthvault.app.ui.chat.ChatViewModel
-import com.stealthvault.app.utils.ShakeDetector
+import com.stealthvault.app.utils.SensorSecurityManager
 import com.stealthvault.app.data.local.SecurityPreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -28,7 +27,7 @@ class VaultActivity : AppCompatActivity() {
     @Inject
     lateinit var securityPrefs: SecurityPreferenceManager
     
-    private val shakeDetector = ShakeDetector {
+    private val sensorSecurityManager = SensorSecurityManager {
         // Quick Hide!
         finishAndRemoveTask()
     }
@@ -53,12 +52,14 @@ class VaultActivity : AppCompatActivity() {
 
         setupNavigation()
         setupFab()
-        shakeDetector.start(this)
+        // Removed shakeDetector.start(this) from onCreate
+
     }
 
     override fun onPause() {
         super.onPause()
         pausedAt = System.currentTimeMillis()
+        sensorSecurityManager.stop()
     }
 
     override fun onResume() {
@@ -72,11 +73,14 @@ class VaultActivity : AppCompatActivity() {
                 return
             }
         }
+        
+        // Start sensors only if enabled
+        sensorSecurityManager.start(this, securityPrefs.isSensorSecurityEnabled)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        shakeDetector.stop()
+        sensorSecurityManager.stop()
     }
 
     private fun setupNavigation() {

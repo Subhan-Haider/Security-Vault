@@ -4,26 +4,227 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    
-    <!-- Modern Charcoal Background -->
+
+    <!-- === BACKGROUND === -->
+    <!-- Deep charcoal base, matching realistic dark calculator apps -->
     <path
-        android:fillColor="#1C1C1E"
-        android:pathData="M0,0h108v108h-108z" />
-        
-    <!-- Premium Amber Accent (Center Button) -->
+        android:fillColor="#1A1C22"
+        android:pathData="M0,0 L108,0 L108,108 L0,108 Z" />
+
+    <!-- Subtle inner gradient vignette (darker at edges) -->
     <path
-        android:fillColor="#FF9F0A"
-        android:pathData="M60,40 a8,8 0 0,1 8,-8 h12 a8,8 0 0,1 8,8 v12 a8,8 0 0,1 -8,8 h-12 a8,8 0 0,1 -8,-8 z" />
-        
-    <!-- Clean Minimalist Grid (Grey) -->
+        android:fillColor="#0D000000"
+        android:pathData="M0,0 L108,0 L108,108 L0,108 Z" />
+
+    <!-- === DISPLAY AREA (top) === -->
+    <!-- Slim display bar at top, slightly lighter than background -->
     <path
-        android:strokeColor="#8E8E93"
-        android:strokeWidth="1.5"
-        android:pathData="M24,36h12 M24,52h12 M24,68h12 M48,36h12 M48,52h12 M48,68h12 M72,36" />
-        
-    <!-- White Equals Symbol inside Amber Button -->
+        android:fillColor="#22252D"
+        android:pathData="M12,12 L96,12 Q96,12 96,12 L96,28 L12,28 Z" />
+
+    <!-- Display text hint: "0" in display area, muted gray -->
+    <!-- Horizontal display underline accent -->
     <path
-        android:strokeColor="#FFFFFF"
-        android:strokeWidth="2.5"
-        android:pathData="M68,42h8 M68,50h8" />
+        android:fillColor="#2A2D38"
+        android:pathData="M12,26.5 L96,26.5 L96,28 L12,28 Z" />
+
+    <!-- Primary operator result area dots (decorative, subtle) -->
+    <path
+        android:fillColor="#3A3D4A"
+        android:pathData="M80,17 a3,3 0,1,0 6,0 a3,3 0,1,0 -6,0" />
+    <path
+        android:fillColor="#3A3D4A"
+        android:pathData="M70,17 a2,2 0,1,0 4,0 a2,2 0,1,0 -4,0" />
+
+    <!-- === BUTTON GRID === -->
+    <!-- Row 1: %, CE, C, ÷ -->
+
+    <!-- Button: % (top-left) -->
+    <path
+        android:fillColor="#22252D"
+        android:pathData="M12,31 Q12,31 12,31 L27,31 L27,44 L12,44 Q12,44 12,44 Z" />
+    <!-- % symbol -->
+    <path
+        android:fillColor="#6B7280"
+        android:strokeWidth="0"
+        android:pathData="M16.5,40 L21.5,35 M16.5,37 a1,1 0,1,0 2,0 a1,1 0,1,0 -2,0 M19.5,38 a1,1 0,1,0 2,0 a1,1 0,1,0 -2,0" />
+
+    <!-- Button: CE -->
+    <path
+        android:fillColor="#22252D"
+        android:pathData="M30,31 L45,31 L45,44 L30,44 Z" />
+    <!-- CE label lines -->
+    <path
+        android:fillColor="#6B7280"
+        android:pathData="M33,36 L41,36 M33,39 L39,39" />
+
+    <!-- Button: C -->
+    <path
+        android:fillColor="#22252D"
+        android:pathData="M48,31 L63,31 L63,44 L48,44 Z" />
+    <!-- C arc symbol -->
+    <path
+        android:fillColor="#9CA3AF"
+        android:pathData="M59,36 Q55.5,33.5 52.5,37.5 Q51,40 53,42 Q56,44.5 59,42" />
+
+    <!-- Button: ÷ (operator, slightly lighter) -->
+    <path
+        android:fillColor="#262A34"
+        android:pathData="M66,31 L81,31 L81,44 L66,44 Z" />
+    <!-- ÷ symbol in warm gray -->
+    <path
+        android:fillColor="#9CA3AF"
+        android:pathData="M70,37.5 L76,37.5 M73,34.5 a1,1 0,1,0 2,0 a1,1 0,1,0 -2,0 M73,40 a1,1 0,1,0 2,0 a1,1 0,1,0 -2,0" />
+
+    <!-- Row 2: 7, 8, 9, × -->
+
+    <!-- Button: 7 -->
+    <path
+        android:fillColor="#22252D"
+        android:pathData="M12,47 L27,47 L27,60 L12,60 Z" />
+    <path
+        android:fillColor="#D1D5DB"
+        android:pathData="M16.5,51 L21.5,51 L17.5,58" />
+
+    <!-- Button: 8 -->
+    <path
+        android:fillColor="#22252D"
+        android:pathData="M30,47 L45,47 L45,60 L30,60 Z" />
+    <path
+        android:fillColor="#D1D5DB"
+        android:pathData="M35,51 Q37.5,49 40,51 Q37.5,54 35,56 Q37.5,58.5 40,56 Q42.5,54 40,51" />
+
+    <!-- Button: 9 -->
+    <path
+        android:fillColor="#22252D"
+        android:pathData="M48,47 L63,47 L63,60 L48,60 Z" />
+    <path
+        android:fillColor="#D1D5DB"
+        android:pathData="M53,51 Q55.5,49 58,51 Q60,53 58,56 Q55.5,58 53,56 L53,51" />
+
+    <!-- Button: × (operator) -->
+    <path
+        android:fillColor="#262A34"
+        android:pathData="M66,47 L81,47 L81,60 L66,60 Z" />
+    <path
+        android:fillColor="#9CA3AF"
+        android:pathData="M70,51 L76,57 M76,51 L70,57" />
+
+    <!-- Row 3: 4, 5, 6, − -->
+
+    <!-- Button: 4 -->
+    <path
+        android:fillColor="#22252D"
+        android:pathData="M12,63 L27,63 L27,76 L12,76 Z" />
+    <path
+        android:fillColor="#D1D5DB"
+        android:pathData="M18,67 L15,72 L21,72 M20,67 L20,75" />
+
+    <!-- Button: 5 -->
+    <path
+        android:fillColor="#22252D"
+        android:pathData="M30,63 L45,63 L45,76 L30,76 Z" />
+    <path
+        android:fillColor="#D1D5DB"
+        android:pathData="M34,67 L38,67 L34,70 Q34,75 39,73" />
+
+    <!-- Button: 6 -->
+    <path
+        android:fillColor="#22252D"
+        android:pathData="M48,63 L63,63 L63,76 L48,76 Z" />
+    <path
+        android:fillColor="#D1D5DB"
+        android:pathData="M56,67 Q52,67 52,71 Q52,75 56,75 Q60,75 60,71 Q60,67 56,67" />
+
+    <!-- Button: − (operator) -->
+    <path
+        android:fillColor="#262A34"
+        android:pathData="M66,63 L81,63 L81,76 L66,76 Z" />
+    <path
+        android:fillColor="#9CA3AF"
+        android:pathData="M70,69.5 L76,69.5" />
+
+    <!-- Row 4: 1, 2, 3, + -->
+
+    <!-- Button: 1 -->
+    <path
+        android:fillColor="#22252D"
+        android:pathData="M12,79 L27,79 L27,92 L12,92 Z" />
+    <path
+        android:fillColor="#D1D5DB"
+        android:pathData="M18,83 L19.5,83 L19.5,91" />
+
+    <!-- Button: 2 -->
+    <path
+        android:fillColor="#22252D"
+        android:pathData="M30,79 L45,79 L45,92 L30,92 Z" />
+    <path
+        android:fillColor="#D1D5DB"
+        android:pathData="M34,83 Q37.5,81 41,83 Q43,85.5 37.5,89 L34,91 L42,91" />
+
+    <!-- Button: 3 -->
+    <path
+        android:fillColor="#22252D"
+        android:pathData="M48,79 L63,79 L63,92 L48,92 Z" />
+    <path
+        android:fillColor="#D1D5DB"
+        android:pathData="M52,83 Q55.5,81 59,83 Q61,85 58,87 Q62,89 59,91 Q55.5,93 52,91" />
+
+    <!-- Button: + (operator) -->
+    <path
+        android:fillColor="#262A34"
+        android:pathData="M66,79 L81,79 L81,92 L66,92 Z" />
+    <path
+        android:fillColor="#9CA3AF"
+        android:pathData="M73,83 L73,89 M70,86 L76,86" />
+
+    <!-- === ACCENT: EQUALS BUTTON (cyber cyan glow) === -->
+    <!-- The hero element: glowing cyan = button, bottom right -->
+    <!-- Outer soft glow halo -->
+    <path
+        android:fillColor="#1A00BCD4"
+        android:pathData="M83,79 L96,79 L96,96 L83,96 Z" />
+    <!-- Main equals button background -->
+    <path
+        android:fillColor="#00BCD4"
+        android:pathData="M84,80 L95,80 L95,95 L84,95 Z" />
+    <!-- Subtle inner highlight (top-left corner brightness) -->
+    <path
+        android:fillColor="#2200E5FF"
+        android:pathData="M84,80 L95,80 L84,91 Z" />
+    <!-- = symbol (two clean white bars) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M87,85.5 L92,85.5 L92,87 L87,87 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M87,89 L92,89 L92,90.5 L87,90.5 Z" />
+
+    <!-- === SUBTLE GRID LINES (depth) === -->
+    <!-- Vertical separators between columns, very subtle -->
+    <path
+        android:fillColor="#11FFFFFF"
+        android:pathData="M28.5,31 L28.5,92 L29,92 L29,31 Z" />
+    <path
+        android:fillColor="#11FFFFFF"
+        android:pathData="M46,31 L46,92 L46.5,92 L46.5,31 Z" />
+    <path
+        android:fillColor="#11FFFFFF"
+        android:pathData="M64,31 L64,92 L64.5,92 L64.5,31 Z" />
+    <!-- Horizontal separators -->
+    <path
+        android:fillColor="#11FFFFFF"
+        android:pathData="M12,45 L81,45 L81,45.5 L12,45.5 Z" />
+    <path
+        android:fillColor="#11FFFFFF"
+        android:pathData="M12,61 L81,61 L81,61.5 L12,61.5 Z" />
+    <path
+        android:fillColor="#11FFFFFF"
+        android:pathData="M12,77 L81,77 L81,77.5 L12,77.5 Z" />
+
+    <!-- Outer corner vignette for depth illusion -->
+    <path
+        android:fillColor="#22000000"
+        android:pathData="M0,0 Q54,0 108,0 L108,108 Q54,108 0,108 Z" />
+
 </vector>

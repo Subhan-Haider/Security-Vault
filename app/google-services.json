@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "256263455615",
+    "firebase_url": "https://stealth-vault-2026-default-rtdb.firebaseio.com",
+    "project_id": "stealth-vault-2026",
+    "storage_bucket": "stealth-vault-2026.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:256263455615:android:9a43ba0aadcaf60ad9904a",
+        "android_client_info": {
+          "package_name": "com.stealthvault.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "256263455615-rshvvupoj0e9claq68js298g62b0fvjr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGRy7S0iIq89Sd1f6fdvBFqhjxSO5rg6Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "256263455615-rshvvupoj0e9claq68js298g62b0fvjr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

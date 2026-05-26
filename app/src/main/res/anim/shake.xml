@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Shake animation for wrong PIN entry.
+    Applied to the calculator display — a short, sharp horizontal jitter
+    that communicates "wrong" without any text message.
+    Duration: 400ms total, 6 rapid oscillations.
+-->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/cycle_interpolator">
+
+    <translate
+        android:fromXDelta="0"
+        android:toXDelta="12"
+        android:duration="60"
+        android:repeatCount="5"
+        android:repeatMode="reverse" />
+
+</set>

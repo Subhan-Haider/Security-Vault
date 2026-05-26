@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission" />
+
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -24,16 +24,16 @@
     <application
         android:name=".StealthVaultApp"
         android:allowBackup="false"
-        android:icon="@drawable/ic_launcher_calculato2r"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/ic_launcher_calculato2r"
+        android:roundIcon="@mipmap/ic_launcher_round"
 
         android:supportsRtl="true"
         android:theme="@style/Theme.StealthVault"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
-        <!-- Original Entry Point (Disabled by default if using an alias) -->
+        <!-- Original Entry Point -->
         <activity
             android:name=".ui.fake.CalculatorActivity"
             android:exported="true"
@@ -46,7 +46,7 @@
             android:name=".CalculatorAlias"
             android:enabled="true"
             android:exported="true"
-            android:icon="@drawable/ic_launcher_calculato2r"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/calculator_name"
             android:targetActivity=".ui.fake.CalculatorActivity">
             <intent-filter>
@@ -76,11 +76,7 @@
             android:exported="false"
             android:theme="@style/Theme.StealthVault.NoActionBar" />
 
-        <!-- In-App Web Viewer for Dual Apps -->
-        <activity
-            android:name=".ui.vault.AppWebActivity"
-            android:exported="false"
-            android:theme="@style/Theme.StealthVault" />
+
 
         <!-- App Lock Overlay -->
         <activity
@@ -126,20 +122,7 @@
             </intent-filter>
         </receiver>
 
-        <!-- Profile / Admin Receiver for Cloning -->
-        <receiver
-            android:name=".receiver.AdminReceiver"
-            android:permission="android.permission.BIND_DEVICE_ADMIN"
-            android:enabled="true"
-            android:exported="true">
-            <meta-data
-                android:name="android.app.device_admin"
-                android:resource="@xml/device_admin_config" />
-            <intent-filter>
-                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
-                <action android:name="android.app.action.PROFILE_PROVISIONING_COMPLETE" />
-            </intent-filter>
-        </receiver>
+
 
         <!-- Emergency Hide System -->
         <service

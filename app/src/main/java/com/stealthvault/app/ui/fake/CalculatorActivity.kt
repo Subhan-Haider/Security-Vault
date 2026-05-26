@@ -2,11 +2,15 @@ package com.stealthvault.app.ui.fake
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Vibrator
+import android.os.VibrationEffect
+import android.os.Build
+import android.view.animation.AnimationUtils
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import com.stealthvault.app.R
 import com.stealthvault.app.data.local.SecurityPreferenceManager
 import com.stealthvault.app.databinding.ActivityCalculatorBinding
 import com.stealthvault.app.ui.vault.VaultActivity
@@ -21,11 +25,9 @@ class CalculatorActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCalculatorBinding
     private var currentInput = ""
-    
-    @Inject
-    lateinit var securityPrefs: SecurityPreferenceManager
-    @Inject
-    lateinit var cameraHelper: CameraHelper
+
+    @Inject lateinit var securityPrefs: SecurityPreferenceManager
+    @Inject lateinit var cameraHelper: CameraHelper
 
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
@@ -39,34 +41,45 @@ class CalculatorActivity : AppCompatActivity() {
 
             setupBiometric()
             setupButtons()
-            
-            // Check for Camera Permission on first run to ensure Intruder Selfie works
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
-                androidx.core.app.ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA), 101)
+
+            // Request camera permission for intruder selfie
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+                != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                androidx.core.app.ActivityCompat.requestPermissions(
+                    this, arrayOf(android.Manifest.permission.CAMERA), 101
+                )
             }
 
-            // Show initial setup prompt if needed
+            // Neutral initial state — looks like a real calculator
+            binding.tvDisplay.text = "0"
+            binding.tvHistory.text = ""
+
             if (!securityPrefs.isSetupComplete) {
-                binding.tvDisplay.text = "0"
-                binding.tvHistory.text = "CREATE MASTER PIN"
+                // First-time setup: guide shown in history area only during setup phase
+                if (securityPrefs.masterPin == null) {
+                    binding.tvHistory.text = "SET PIN"
+                } else if (securityPrefs.isDecoyEnabled) {
+                    binding.tvHistory.text = "SET DECOY"
+                } else {
+                    securityPrefs.isSetupComplete = true
+                    binding.tvHistory.text = ""
+                }
             }
 
             binding.tvHistory.setOnLongClickListener {
                 if (securityPrefs.isSetupComplete) {
                     biometricPrompt.authenticate(promptInfo)
-                } else {
-                    Toast.makeText(this, "Complete Setup First", Toast.LENGTH_SHORT).show()
                 }
                 true
             }
         } catch (t: Throwable) {
+            // Fallback crash display for debugging
             val tv = android.widget.TextView(this).apply {
                 text = "CRASH: " + android.util.Log.getStackTraceString(t)
                 setTextColor(android.graphics.Color.RED)
                 textSize = 14f
                 setPadding(32, 32, 32, 32)
             }
-            // Remove previous content view and show crash
             val scrollView = android.widget.ScrollView(this).apply {
                 addView(tv)
                 setBackgroundColor(android.graphics.Color.BLACK)
@@ -93,14 +106,13 @@ class CalculatorActivity : AppCompatActivity() {
     }
 
     private fun setupButtons() {
-        // ... (previous button setup logic)
-        val allButtons = listOf(
+        val numericButtons = listOf(
             binding.btn0, binding.btn1, binding.btn2, binding.btn3, binding.btn4,
             binding.btn5, binding.btn6, binding.btn7, binding.btn8, binding.btn9,
             binding.btnDot, binding.btnAdd, binding.btnSub, binding.btnMul, binding.btnDiv
         )
 
-        allButtons.forEach { button ->
+        numericButtons.forEach { button ->
             button.setOnClickListener {
                 currentInput += (it as Button).text
                 binding.tvDisplay.text = currentInput
@@ -110,6 +122,7 @@ class CalculatorActivity : AppCompatActivity() {
         binding.btnClear.setOnClickListener {
             currentInput = ""
             binding.tvDisplay.text = "0"
+            binding.tvHistory.text = ""
         }
 
         binding.btnBackspace.setOnClickListener {
@@ -130,104 +143,174 @@ class CalculatorActivity : AppCompatActivity() {
             return
         }
 
-        // 🔒 Lockout check: too many wrong attempts
-        if (securityPrefs.isLockedOut) {
-            binding.tvHistory.text = "TOO MANY ATTEMPTS"
-            binding.tvDisplay.text = "⛔"
-            Toast.makeText(this, "Vault locked. Wait 30 seconds.", Toast.LENGTH_LONG).show()
-            currentInput = ""
-            // Auto-release after 30 seconds
-            binding.root.postDelayed({
-                securityPrefs.isLockedOut = false
-                securityPrefs.failedPinAttempts = 0
-                binding.tvHistory.text = "ENTER PIN"
-                binding.tvDisplay.text = "0"
-            }, 30_000)
-            return
-        }
-
         val master = securityPrefs.masterPin
         val decoy = securityPrefs.decoyPin
 
+        // Lockout state — reject silently, same as wrong PIN
+        if (securityPrefs.isLockedOut) {
+            // Only auto-reset after 30s, no on-screen indication
+            binding.root.postDelayed({
+                securityPrefs.isLockedOut = false
+                securityPrefs.failedPinAttempts = 0
+            }, 30_000)
+            rejectEntry()
+            return
+        }
+
         when (currentInput) {
             master -> {
-                // ✅ Correct: reset counters, record unlock time
                 securityPrefs.failedPinAttempts = 0
                 securityPrefs.lastUnlockTime = System.currentTimeMillis()
                 launchVault(isDecoy = false)
             }
             decoy -> {
-                securityPrefs.failedPinAttempts = 0
-                securityPrefs.lastUnlockTime = System.currentTimeMillis()
-                launchVault(isDecoy = true)
+                if (securityPrefs.isDecoyEnabled) {
+                    securityPrefs.failedPinAttempts = 0
+                    securityPrefs.lastUnlockTime = System.currentTimeMillis()
+                    launchVault(isDecoy = true)
+                } else {
+                    // Fallthrough to reject if decoy is disabled but matches exactly
+                    rejectEntry()
+                }
             }
             else -> {
-                // ❌ Wrong PIN
-                if (currentInput.length >= 4 && !currentInput.contains("[+×÷−]".toRegex())) {
+                // Only treat pure numeric strings (length ≥ 4) as PIN attempts
+                if (currentInput.length >= 4 && !currentInput.contains("[+×÷−.]".toRegex())) {
                     val attempts = securityPrefs.failedPinAttempts + 1
                     securityPrefs.failedPinAttempts = attempts
-                    val maxAttempts = securityPrefs.maxFailedAttempts
-                    val remaining = maxAttempts - attempts
-                    
+
+                    // Silently capture intruder photo
                     cameraHelper.takeIntruderPhoto(this)
 
-                    if (attempts >= maxAttempts) {
+                    // Trigger lockout threshold silently
+                    if (attempts >= securityPrefs.maxFailedAttempts) {
                         securityPrefs.isLockedOut = true
-                        binding.tvHistory.text = "VAULT LOCKED"
-                        Toast.makeText(this, "Too many wrong attempts! Vault locked for 30s.", Toast.LENGTH_LONG).show()
-                    } else {
-                        binding.tvHistory.text = "WRONG ($remaining attempts left)"
-                        Toast.makeText(this, "Wrong PIN. $remaining attempts remaining.", Toast.LENGTH_SHORT).show()
                     }
-                    binding.tvDisplay.text = "0"
+
+                    rejectEntry()
                 } else {
+                    // Input contains operators — treat as math
                     performMath()
                 }
             }
         }
-        currentInput = ""
     }
+
+    /**
+     * Silently reject a wrong PIN attempt.
+     * No text message, no attempt count — just a shake + vibration.
+     */
+    private fun rejectEntry() {
+        // Shake the display
+        val shake = AnimationUtils.loadAnimation(this, R.anim.shake)
+        binding.tvDisplay.startAnimation(shake)
+
+        // Subtle vibration (short double-pulse, similar to a physical lock click)
+        try {
+            val vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createWaveform(
+                    longArrayOf(0, 60, 60, 60), -1
+                ))
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(longArrayOf(0, 60, 60, 60), -1)
+            }
+        } catch (_: Exception) {}
+
+        // Clear display silently — no error text
+        currentInput = ""
+        binding.tvDisplay.text = "0"
+        // Keep history blank — don't expose anything
+        binding.tvHistory.text = ""
+    }
+
+    private var pendingPin: String? = null
 
     private fun setupPins() {
         val input = currentInput
         if (input.isEmpty() || input.length < 4) {
-            Toast.makeText(this, "PIN must be at least 4 digits", Toast.LENGTH_SHORT).show()
+            // Minimal feedback — just clear, no detailed instruction
+            rejectEntry()
             return
         }
 
         if (securityPrefs.masterPin == null) {
-            securityPrefs.masterPin = input
-            binding.tvHistory.text = "CREATE DECOY PIN"
-            Toast.makeText(this, "Master PIN Saved!", Toast.LENGTH_SHORT).show()
-        } else if (securityPrefs.decoyPin == null) {
-            if (input == securityPrefs.masterPin) {
-                Toast.makeText(this, "Decoy must be different", Toast.LENGTH_SHORT).show()
+            if (pendingPin == null) {
+                pendingPin = input
+                binding.tvHistory.text = "CONFIRM PIN"
+                currentInput = ""
+                binding.tvDisplay.text = "0"
             } else {
-                securityPrefs.decoyPin = input
-                securityPrefs.isSetupComplete = true
-                binding.tvHistory.text = "VAULT SECURED"
-                Toast.makeText(this, "Setup Complete!", Toast.LENGTH_LONG).show()
+                if (pendingPin == input) {
+                    securityPrefs.masterPin = input
+                    pendingPin = null
+                    if (securityPrefs.isDecoyEnabled) {
+                        binding.tvHistory.text = "SET DECOY"
+                        currentInput = ""
+                        binding.tvDisplay.text = "0"
+                    } else {
+                        securityPrefs.isSetupComplete = true
+                        binding.tvHistory.text = ""
+                        binding.tvDisplay.text = "0"
+                        currentInput = ""
+                    }
+                } else {
+                    pendingPin = null
+                    binding.tvHistory.text = "SET PIN"
+                    rejectEntry()
+                }
+            }
+        } else if (securityPrefs.decoyPin == null) {
+            if (pendingPin == null) {
+                if (input == securityPrefs.masterPin) {
+                    // Same as master — silently reject
+                    rejectEntry()
+                } else {
+                    pendingPin = input
+                    binding.tvHistory.text = "CONFIRM DECOY"
+                    currentInput = ""
+                    binding.tvDisplay.text = "0"
+                }
+            } else {
+                if (pendingPin == input) {
+                    securityPrefs.decoyPin = input
+                    securityPrefs.isSetupComplete = true
+                    pendingPin = null
+                    binding.tvHistory.text = ""
+                    binding.tvDisplay.text = "0"
+                    currentInput = ""
+                } else {
+                    pendingPin = null
+                    binding.tvHistory.text = "SET DECOY"
+                    rejectEntry()
+                }
             }
         }
-        currentInput = ""
-        binding.tvDisplay.text = "0"
     }
 
     private fun performMath() {
         try {
-            val expression = ExpressionBuilder(currentInput
-                .replace("×", "*")
-                .replace("÷", "/")
-                .replace("−", "-")
+            val expression = ExpressionBuilder(
+                currentInput
+                    .replace("×", "*")
+                    .replace("÷", "/")
+                    .replace("−", "-")
             ).build()
-            
+
             val result = expression.evaluate()
+            val resultStr = if (result == result.toLong().toDouble()) {
+                result.toLong().toString()
+            } else {
+                "%.8g".format(result).trimEnd('0').trimEnd('.')
+            }
             binding.tvHistory.text = currentInput
-            binding.tvDisplay.text = result.toString()
-            currentInput = result.toString()
+            binding.tvDisplay.text = resultStr
+            currentInput = resultStr
         } catch (e: Exception) {
             binding.tvDisplay.text = "Error"
-            cameraHelper.takeIntruderPhoto(this)
+            binding.tvHistory.text = ""
+            currentInput = ""
         }
     }
 
