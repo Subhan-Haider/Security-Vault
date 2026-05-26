@@ -16,7 +16,7 @@
     .hero {
       position: relative; min-height: calc(100vh - var(--nav-h));
       display: flex; align-items: center;
-      padding: clamp(4rem,8vw,8rem) clamp(1rem,5vw,3rem);
+      padding: clamp(4rem,8vw,8rem) max(clamp(1rem,5vw,3rem), calc(50vw - 580px));
       overflow: hidden;
     }
     .hero-content { position: relative; z-index: 1; max-width: 640px; }
@@ -39,6 +39,9 @@
       position: absolute; right: clamp(-2rem, 5vw, 6rem); top: 50%;
       transform: translateY(-50%);
       width: clamp(260px, 30vw, 340px);
+    }
+    @media (min-width: 1200px) {
+      .hero-visual { right: calc(50vw - 540px); }
     }
     .phone-mock {
       position: relative; width: 100%;
@@ -403,12 +406,12 @@
 
 <!-- ═══════════════════════════════════════ FAQ ══ -->
 <section class="section">
-  <div class="reveal">
-    <div class="label">❓ FAQ</div>
+  <div class="reveal" style="text-align: center;">
+    <div class="label" style="justify-content: center;">❓ FAQ</div>
     <h2 class="section-title">Common <span class="text-gradient">questions.</span></h2>
   </div>
 
-  <div style="max-width:720px;" class="reveal">
+  <div style="max-width:720px; margin: 0 auto;" class="reveal">
     <div class="faq-item">
       <div class="faq-q">Is my data ever uploaded to a server? <span class="faq-arrow">+</span></div>
       <div class="faq-a"><div class="faq-a-inner">No. Stealth Vault is 100% offline. All files and data remain on your device only. No accounts, no cloud sync, no telemetry of any kind.</div></div>
