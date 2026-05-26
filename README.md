@@ -12,7 +12,7 @@
   <img src="https://img.shields.io/badge/Android-Kotlin-3498db?style=for-the-badge&logo=kotlin" alt="Kotlin">
   <img src="https://img.shields.io/badge/Web-React%20%7C%20TS-61dafb?style=for-the-badge&logo=react" alt="React & TS">
   <img src="https://img.shields.io/badge/Encryption-AES--256--GCM-2ecc71?style=for-the-badge" alt="AES-256-GCM">
-  <img src="https://img.shields.io/badge/License-MIT-f1c40f?style=for-the-badge" alt="MIT License">
+  <img src="https://img.shields.io/badge/License-Proprietary%20%7C%20No%20Commercial%20Use-e74c3c?style=for-the-badge" alt="Proprietary License">
 </p>
 
 ---
@@ -181,4 +181,11 @@ Contributions are welcome! Please follow these guidelines:
 
 ## ⚖️ License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+This project is released under a **Custom Proprietary License**.
+
+- 🚫 **No commercial use** — may not be published on any app store (Google Play, Apple App Store, etc.)
+- 🚫 **No redistribution** — may not be shared or distributed to third parties
+- 🚫 **No modification** — may not be altered, adapted, or used as a base for derivative works
+- ✅ **Personal study only** — viewing and private study of the source code is permitted
+
+See the [LICENSE](LICENSE) file for the full terms and conditions.
