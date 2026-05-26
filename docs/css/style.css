@@ -386,3 +386,40 @@ h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.2; }
   .grid-4 { grid-template-columns: 1fr; }
   .footer-bottom { flex-direction: column; text-align: center; }
 }
+
+/* ── Socials and PlayStore Coming Soon ───────── */
+.footer-socials {
+  display: flex;
+  gap: 8px;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+}
+.social-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  border: 1px solid var(--border);
+  color: var(--text-2);
+}
+.social-icon:hover {
+  background: var(--cyan);
+  color: var(--bg-base);
+  border-color: var(--cyan);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
+}
+.btn-disabled {
+  opacity: 0.65;
+  cursor: not-allowed !important;
+  border: 1px solid var(--border) !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  color: var(--text-2) !important;
+  box-shadow: none !important;
+}
+
