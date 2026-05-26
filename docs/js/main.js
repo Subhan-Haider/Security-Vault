@@ -41,8 +41,11 @@
   const nav = document.querySelector('.nav');
   if (!nav) return;
   window.addEventListener('scroll', () => {
-    nav.style.background =
-      window.scrollY > 20 ? 'rgba(10,14,26,0.97)' : 'rgba(10,14,26,0.8)';
+    if (window.scrollY > 20) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
   });
 })();
 
@@ -115,3 +118,41 @@ document.querySelectorAll('.faq-item').forEach((item) => {
     if (!open) item.classList.add('open');
   });
 });
+
+// ── Theme Switcher ─────────────────────────────
+(function () {
+  const toggleBtn = document.getElementById('themeToggle');
+  const mobileToggleBtn = document.getElementById('mobileThemeToggle');
+  const html = document.documentElement;
+
+  // Update mobile label initial state
+  if (html.classList.contains('light-theme')) {
+    updateMobileLabel('Light');
+  } else {
+    updateMobileLabel('Dark');
+  }
+
+  function updateMobileLabel(themeName) {
+    if (mobileToggleBtn) {
+      const label = mobileToggleBtn.querySelector('.current-theme-label');
+      if (label) label.textContent = themeName;
+    }
+  }
+
+  function toggleTheme() {
+    const isLight = html.classList.toggle('light-theme');
+    const newTheme = isLight ? 'light' : 'dark';
+    localStorage.setItem('theme', newTheme);
+    updateMobileLabel(isLight ? 'Light' : 'Dark');
+  }
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', toggleTheme);
+  }
+  if (mobileToggleBtn) {
+    mobileToggleBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+})();

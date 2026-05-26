@@ -7,6 +7,11 @@
   <meta name="description" content="Download Stealth Vault APK for Android. Free, offline, no account required. AES-256 encrypted private vault disguised as a calculator." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>" />
   <link rel="stylesheet" href="css/style.css" />
+  <script>
+    if (localStorage.getItem('theme') === 'light') {
+      document.documentElement.classList.add('light-theme');
+    }
+  </script>
   <style>
     .dl-hero {
       text-align: center;
@@ -171,6 +176,10 @@
     <a href="privacy.html">Privacy</a>
     <a href="terms.html">Terms</a>
     <a href="download.html" class="nav-cta">Get App ↓</a>
+    <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Theme">
+      <span class="theme-icon-sun">☀️</span>
+      <span class="theme-icon-moon">🌙</span>
+    </button>
   </div>
   <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
 </nav>
@@ -181,6 +190,10 @@
   <a href="about.html">👋 About</a>
   <a href="privacy.html">🔒 Privacy Policy</a>
   <a href="terms.html">📋 Terms</a>
+  <a href="#" id="mobileThemeToggle" style="display:flex; justify-content:space-between; align-items:center;">
+    <span>🌓 Toggle Theme</span>
+    <span class="current-theme-label" style="font-size:0.8rem; background:rgba(255,255,255,0.06); padding:2px 8px; border-radius:12px;">Dark</span>
+  </a>
 </div>
 
 <div class="page-wrap">
