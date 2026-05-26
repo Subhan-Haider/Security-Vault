@@ -562,3 +562,110 @@ html.light-theme .current-theme-label {
   background: rgba(15,23,42,0.06) !important;
 }
 
+/* Hero title — fix white gradient text on light bg */
+html.light-theme .hero-title {
+  background: linear-gradient(135deg, #0f172a 20%, var(--cyan) 60%, var(--indigo));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* Secondary button on light bg */
+html.light-theme .btn-secondary {
+  background: rgba(15,23,42,0.04);
+  border-color: rgba(15,23,42,0.12);
+  color: var(--text-1);
+}
+html.light-theme .btn-secondary:hover {
+  background: rgba(15,23,42,0.08);
+  border-color: rgba(15,23,42,0.2);
+}
+html.light-theme .btn-ghost:hover {
+  color: var(--indigo);
+  background: rgba(79,70,229,0.08);
+}
+
+/* Card glass (feature details) */
+html.light-theme .card-glass {
+  background: rgba(255,255,255,0.7);
+  border-color: rgba(15,23,42,0.08);
+}
+html.light-theme .card:hover {
+  box-shadow: 0 20px 40px rgba(15,23,42,0.08), var(--shadow-glow-cyan);
+}
+
+/* Label pill (section tags) */
+html.light-theme .label {
+  background: rgba(0,150,199,0.07);
+  border-color: rgba(0,150,199,0.18);
+}
+
+/* Data table borders and rows */
+html.light-theme .data-table td { border-bottom-color: rgba(15,23,42,0.06); }
+html.light-theme .data-table tr:hover td { background: rgba(15,23,42,0.02); }
+
+/* Code block */
+html.light-theme .code-block {
+  background: #f1f5f9;
+  color: #0369a1;
+  border-color: rgba(15,23,42,0.1);
+}
+
+/* Noise overlay — reduce/remove on light theme */
+html.light-theme body::before { opacity: 0; }
+
+/* Hero orbs — soften on light */
+html.light-theme .hero-orb-1 {
+  background: radial-gradient(circle, rgba(0,150,199,0.06), transparent 70%);
+}
+html.light-theme .hero-orb-2 {
+  background: radial-gradient(circle, rgba(79,70,229,0.06), transparent 70%);
+}
+
+/* Stats section */
+html.light-theme .stats-section {
+  background: var(--bg-surface);
+  border-color: var(--border);
+}
+
+/* Footer */
+html.light-theme .footer {
+  background: var(--bg-surface);
+  border-top-color: var(--border);
+}
+html.light-theme .footer-col a:hover { color: var(--cyan); }
+html.light-theme .footer-bottom { border-top-color: var(--border); }
+
+/* Mobile menu border */
+html.light-theme .mobile-menu {
+  border-bottom-color: var(--border);
+}
+
+/* FAQ item on light */
+html.light-theme .faq-item {
+  background: var(--bg-card);
+}
+html.light-theme .faq-item:hover {
+  border-color: rgba(0,150,199,0.2);
+  box-shadow: 0 4px 15px rgba(0,150,199,0.04);
+}
+html.light-theme .faq-q:hover { background: rgba(0,150,199,0.03); }
+
+/* Prose boxes */
+html.light-theme .prose .info-box {
+  background: rgba(0,150,199,0.04);
+  border-color: rgba(0,150,199,0.15);
+}
+html.light-theme .prose .warn-box {
+  background: rgba(245,158,11,0.04);
+  border-color: rgba(245,158,11,0.15);
+}
+
+/* Timeline */
+html.light-theme .timeline-dot { background: var(--bg-card); }
+
+/* Page header inner pages */
+html.light-theme .page-header {
+  background: radial-gradient(ellipse at top, rgba(0,150,199,0.05) 0%, transparent 60%);
+}
+
+/* Scrollbar track on light body */
+html.light-theme body { background: var(--bg-base); color: var(--text-1); }
