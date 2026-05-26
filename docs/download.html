@@ -45,9 +45,40 @@
       background: var(--bg-card); border: 1px solid var(--border);
       border-radius: var(--radius-lg); padding: 1.5rem;
       display: flex; gap: 1.25rem; align-items: flex-start;
-      transition: border-color 0.3s;
+      position: relative; z-index: 1; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .version-card:hover { border-color: var(--border-glow); }
+    .version-card::after {
+      content: ''; position: absolute; inset: -1px; z-index: -1;
+      background: linear-gradient(135deg, rgba(0,212,255,0.4), rgba(139,92,246,0.4));
+      border-radius: inherit; opacity: 0; transition: opacity 0.4s ease;
+    }
+    .version-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3), var(--shadow-glow-cyan);
+      background: var(--bg-card-hover);
+      border-color: transparent;
+    }
+    .version-card:hover::after { opacity: 1; }
+
+    /* Big download card */
+    .dl-card-main {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-xl); padding: 3rem;
+      display: flex; gap: 2.5rem; align-items: center; margin-bottom: 4rem;
+      position: relative; z-index: 1; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .dl-card-main::after {
+      content: ''; position: absolute; inset: -1px; z-index: -1;
+      background: linear-gradient(135deg, rgba(0,212,255,0.5), rgba(99,102,241,0.5));
+      border-radius: inherit; opacity: 0; transition: opacity 0.4s ease;
+    }
+    .dl-card-main:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4), var(--shadow-glow-cyan);
+      background: var(--bg-card-hover);
+      border-color: transparent;
+    }
+    .dl-card-main:hover::after { opacity: 1; }
     .version-badge-wrap { flex-shrink: 0; }
     .version-num {
       font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700;
@@ -66,9 +97,21 @@
     .req-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1rem; }
     .req-card {
       background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius-md); padding: 1.25rem;
-      display: flex; gap: 12px; align-items: flex-start;
+      border-radius: var(--radius-md); padding: 1.5rem;
+      display: flex; align-items: center; gap: 1rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; z-index: 1;
     }
+    .req-card::after {
+      content: ''; position: absolute; inset: -1px; z-index: -1;
+      background: linear-gradient(135deg, rgba(16,185,129,0.4), rgba(0,212,255,0.4));
+      border-radius: inherit; opacity: 0; transition: opacity 0.4s ease;
+    }
+    .req-card:hover {
+      transform: translateY(-3px);
+      background: var(--bg-card-hover); border-color: transparent;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3), 0 0 15px rgba(16,185,129,0.15);
+    }
+    .req-card:hover::after { opacity: 1; }
     .req-icon { font-size: 1.5rem; flex-shrink: 0; }
     .req-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 3px; }
     .req-val { font-size: 0.875rem; font-weight: 600; color: var(--text-1); }

@@ -103,10 +103,22 @@
     /* ── Feature Strip ── */
     .feature-strip { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 2rem; }
     .fstrip-item {
-      flex: 1; min-width: 200px;
+      flex: 1; min-width: 200px; position: relative; z-index: 1; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       background: var(--bg-card); border: 1px solid var(--border);
       border-radius: var(--radius-md); padding: 1.5rem;
     }
+    .fstrip-item::after {
+      content: ''; position: absolute; inset: -1px; z-index: -1;
+      background: linear-gradient(135deg, rgba(0,212,255,0.5), rgba(99,102,241,0.5));
+      border-radius: inherit; opacity: 0; transition: opacity 0.4s ease;
+    }
+    .fstrip-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4), var(--shadow-glow-cyan);
+      background: var(--bg-card-hover);
+      border-color: transparent;
+    }
+    .fstrip-item:hover::after { opacity: 1; }
     .fstrip-icon { font-size: 2rem; margin-bottom: 0.8rem; }
     .fstrip-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.4rem; }
     .fstrip-desc { color: var(--text-2); font-size: 0.82rem; line-height: 1.5; }
@@ -138,14 +150,14 @@
       text-align: center;
     }
 
-    /* ── FAQ ── */
-    .faq-item { border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 10px; overflow: hidden; }
+    .faq-item { border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 10px; overflow: hidden; transition: all 0.3s; background: var(--bg-card); }
+    .faq-item:hover { border-color: rgba(0,212,255,0.3); box-shadow: 0 4px 15px rgba(0,212,255,0.05); }
     .faq-q {
       display: flex; align-items: center; justify-content: space-between;
       padding: 1.1rem 1.4rem; cursor: pointer; font-weight: 600; font-size: 0.95rem;
-      transition: background 0.2s;
+      transition: background 0.2s, color 0.2s;
     }
-    .faq-q:hover { background: rgba(255,255,255,0.03); }
+    .faq-q:hover { background: rgba(0,212,255,0.04); color: #fff; }
     .faq-arrow { font-size: 1.1rem; transition: transform 0.3s; color: var(--text-3); }
     .faq-item.open .faq-arrow { transform: rotate(45deg); color: var(--cyan); }
     .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.3s; }

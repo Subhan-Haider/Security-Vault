@@ -40,7 +40,7 @@
   --font-mono:    'JetBrains Mono', monospace;
 }
 
-/* ── Reset ──────────────────────────────────── */
+/* ── Reset & Core Defaults ──────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
@@ -55,6 +55,15 @@ a { text-decoration: none; color: inherit; }
 img { max-width: 100%; display: block; }
 ul, ol { list-style: none; }
 button { cursor: pointer; font-family: var(--font-body); border: none; background: none; }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 10px; border: 2px solid var(--bg-base); }
+::-webkit-scrollbar-thumb:hover { background: #374151; }
+
+/* Text Selection */
+::selection { background: rgba(0, 212, 255, 0.2); color: #fff; }
 
 /* ── Noise Overlay ──────────────────────────── */
 body::before {
@@ -163,23 +172,44 @@ h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.2; }
 
 /* ── Buttons ────────────────────────────────── */
 .btn {
-  display: inline-flex; align-items: center; gap: 8px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   padding: 13px 28px; border-radius: var(--radius-md);
   font-size: 0.95rem; font-weight: 600;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative; overflow: hidden;
+  z-index: 1;
 }
 .btn-primary {
   background: linear-gradient(135deg, var(--cyan), var(--indigo));
-  color: #fff; box-shadow: 0 4px 20px rgba(0,212,255,0.3);
+  color: #fff; box-shadow: 0 4px 20px rgba(0,212,255,0.25);
+  border: 1px solid rgba(255,255,255,0.1);
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,212,255,0.4); }
+.btn-primary::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(135deg, var(--indigo), var(--cyan));
+  opacity: 0; transition: opacity 0.3s ease;
+}
+.btn-primary:hover { 
+  transform: translateY(-3px) scale(1.02); 
+  box-shadow: 0 10px 30px rgba(0,212,255,0.4), 0 0 15px rgba(99,102,241,0.4); 
+}
+.btn-primary:hover::before { opacity: 1; }
+.btn-primary:active { transform: translateY(0) scale(0.98); }
+
 .btn-secondary {
-  background: rgba(255,255,255,0.06); color: var(--text-1);
-  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03); color: var(--text-1);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
 }
-.btn-secondary:hover { background: rgba(255,255,255,0.1); }
-.btn-ghost { color: var(--cyan); }
-.btn-ghost:hover { color: var(--indigo); }
+.btn-secondary:hover { 
+  background: rgba(255,255,255,0.08); 
+  border-color: rgba(255,255,255,0.2);
+  transform: translateY(-2px);
+}
+.btn-secondary:active { transform: translateY(0); }
+
+.btn-ghost { color: var(--cyan); padding: 8px 16px; border-radius: var(--radius-sm); transition: all 0.2s; }
+.btn-ghost:hover { color: #fff; background: rgba(0,212,255,0.1); }
 .btn-lg { padding: 16px 36px; font-size: 1.05rem; border-radius: var(--radius-lg); }
 .btn-sm { padding: 8px 18px; font-size: 0.825rem; border-radius: var(--radius-sm); }
 
@@ -189,13 +219,22 @@ h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.2; }
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 2rem;
-  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+.card::after {
+  content: ''; position: absolute; inset: -1px; z-index: -1;
+  background: linear-gradient(135deg, rgba(0,212,255,0.5), rgba(99,102,241,0.5));
+  border-radius: inherit; opacity: 0; transition: opacity 0.4s ease;
 }
 .card:hover {
-  border-color: var(--border-glow);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-glow-cyan);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), var(--shadow-glow-cyan);
+  background: var(--bg-card-hover);
+  border-color: transparent;
 }
+.card:hover::after { opacity: 1; }
 .card-glass {
   background: rgba(15,22,41,0.6);
   backdrop-filter: blur(16px);
