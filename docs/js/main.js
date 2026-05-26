@@ -49,11 +49,16 @@
 // ── Active nav link ────────────────────────────
 (function () {
   const links = document.querySelectorAll('.nav-links a, .mobile-menu a');
-  const current = location.pathname.split('/').pop() || 'index.html';
+  let path = location.pathname.split('/').pop();
+  if (path === '' || path === 'index.html') {
+    path = './';
+  }
   links.forEach((a) => {
     const href = a.getAttribute('href');
-    if (href === current || (current === '' && href === 'index.html')) {
+    if (href === path) {
       a.classList.add('active');
+    } else {
+      a.classList.remove('active');
     }
   });
 })();
