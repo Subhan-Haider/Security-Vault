@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download — Stealth Vault</title>
+  <meta name="description" content="Download Stealth Vault APK for Android. Free, offline, no account required. AES-256 encrypted private vault disguised as a calculator." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .dl-hero {
+      text-align: center;
+      padding: clamp(5rem,9vw,8rem) clamp(1rem,5vw,3rem) clamp(3rem,5vw,5rem);
+      background: radial-gradient(ellipse at top, rgba(0,212,255,0.07) 0%, transparent 60%);
+      border-bottom: 1px solid var(--border);
+    }
+    .dl-hero h1 { font-size: clamp(2.2rem,5vw,3.8rem); font-weight:900; margin-bottom:1rem; }
+    .dl-hero p { color:var(--text-2); font-size:1.05rem; max-width:520px; margin:0 auto 2.5rem; line-height:1.7; }
+
+    /* Big download card */
+    .dl-card-main {
+      max-width: 720px; margin: 3rem auto; padding: 2.5rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      display: flex; gap: 2rem; align-items: center;
+      box-shadow: 0 0 60px rgba(0,212,255,0.08);
+      transition: border-color 0.3s;
+    }
+    .dl-card-main:hover { border-color: var(--border-glow); }
+    .dl-app-icon {
+      width: 90px; height: 90px; border-radius: 22px; flex-shrink: 0;
+      background: linear-gradient(135deg, #00d4ff22, #6366f133);
+      border: 1px solid rgba(0,212,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
+    }
+    .dl-app-info { flex: 1; }
+    .dl-app-name { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; margin-bottom: 4px; }
+    .dl-app-meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1rem; }
+    .dl-app-desc { color: var(--text-2); font-size: 0.875rem; line-height: 1.6; margin-bottom: 1.5rem; }
+    .dl-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* Version history */
+    .version-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.5rem;
+      display: flex; gap: 1.25rem; align-items: flex-start;
+      transition: border-color 0.3s;
+    }
+    .version-card:hover { border-color: var(--border-glow); }
+    .version-badge-wrap { flex-shrink: 0; }
+    .version-num {
+      font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700;
+      color: var(--cyan); background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.2);
+      padding: 6px 12px; border-radius: var(--radius-sm); display: block;
+      text-align: center; white-space: nowrap;
+    }
+    .version-date { font-size: 0.7rem; color: var(--text-3); text-align: center; margin-top: 4px; }
+    .version-info h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .version-info ul { display: flex; flex-direction: column; gap: 5px; }
+    .version-info li { font-size: 0.82rem; color: var(--text-2); }
+    .version-info li::before { content: '+ '; color: var(--green); font-weight: 700; }
+
+    /* Requirements */
+    .req-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1rem; }
+    .req-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 1.25rem;
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .req-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .req-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 3px; }
+    .req-val { font-size: 0.875rem; font-weight: 600; color: var(--text-1); }
+
+    /* Steps */
+    .steps-wrap { display: flex; flex-direction: column; gap: 0; }
+    .step-row {
+      display: flex; gap: 1.5rem; padding: 1.5rem;
+      border: 1px solid var(--border); background: var(--bg-card);
+      margin-bottom: -1px;
+      transition: background 0.2s;
+    }
+    .step-row:first-child { border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+    .step-row:last-child  { border-radius: 0 0 var(--radius-lg) var(--radius-lg); margin-bottom: 0; }
+    .step-row:hover { background: var(--bg-card-hover); }
+    .step-num {
+      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--cyan), var(--indigo));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 800; color: #fff;
+    }
+    .step-text h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 3px; }
+    .step-text p  { font-size: 0.85rem; color: var(--text-2); line-height: 1.6; }
+    .step-text code { background: rgba(0,212,255,0.1); color: var(--cyan); padding: 1px 6px; border-radius: 4px; font-size: 0.8rem; font-family: var(--font-mono); }
+
+    /* Warn banner */
+    .warn-banner {
+      max-width: 720px; margin: 0 auto 2rem;
+      background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.25);
+      border-radius: var(--radius-md); padding: 1rem 1.5rem;
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .warn-banner .wb-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .warn-banner p { font-size: 0.85rem; color: var(--text-2); line-height: 1.6; }
+    .warn-banner strong { color: var(--amber); }
+
+    @media (max-width: 600px) {
+      .dl-card-main { flex-direction: column; text-align: center; }
+      .dl-app-meta { justify-content: center; }
+      .dl-actions { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-brand"><div class="nav-brand-icon">🔐</div> Stealth Vault</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="download.html" class="active">Download</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="download.html" class="nav-cta">Get App ↓</a>
+  </div>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">🏠 Home</a>
+  <a href="features.html">⚡ Features</a>
+  <a href="download.html">📥 Download</a>
+  <a href="privacy.html">🔒 Privacy Policy</a>
+  <a href="terms.html">📋 Terms</a>
+</div>
+
+<div class="page-wrap">
+
+<!-- ═══ HERO ══ -->
+<div class="dl-hero">
+  <div class="label" style="justify-content:center;">📥 Free Download</div>
+  <h1>Download <span class="text-gradient">Stealth Vault</span></h1>
+  <p>Free. No account. No ads. 100% offline. Just download the APK, install it, and your vault is ready in under a minute.</p>
+  <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+    <a href="https://github.com/Subhan-Haider/Security-Vault/releases/latest" target="_blank" class="btn btn-primary btn-lg">
+      📥 Download Latest APK
+    </a>
+    <a href="https://github.com/Subhan-Haider/Security-Vault/releases" target="_blank" class="btn btn-secondary btn-lg">
+      📋 All Releases
+    </a>
+  </div>
+</div>
+
+<!-- ═══ MAIN DOWNLOAD CARD ══ -->
+<div style="max-width:860px; margin:0 auto; padding:2.5rem clamp(1rem,4vw,2rem);">
+
+  <div class="dl-card-main reveal">
+    <div class="dl-app-icon">🔐</div>
+    <div class="dl-app-info">
+      <div class="dl-app-name">Stealth Vault</div>
+      <div class="dl-app-meta">
+        <span class="badge badge-cyan">v1.0.0</span>
+        <span class="badge badge-green">Stable</span>
+        <span class="badge badge-indigo">Android 8.0+</span>
+        <span class="badge badge-amber">~8 MB</span>
+      </div>
+      <div class="dl-app-desc">
+        The complete encrypted vault disguised as a calculator. Includes AES-256-GCM encryption, app locker, intruder selfie, decoy PIN, and emergency wipe.
+      </div>
+      <div class="dl-actions">
+        <a href="https://github.com/Subhan-Haider/Security-Vault/releases/latest/download/StealthVault.apk" class="btn btn-primary">
+          📥 Download APK
+        </a>
+        <a href="https://github.com/Subhan-Haider/Security-Vault" target="_blank" class="btn btn-secondary">
+          ⭐ View on GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn-banner reveal">
+    <div class="wb-icon">⚠️</div>
+    <p>
+      <strong>Enable "Install from Unknown Sources"</strong> before installing. Go to
+      <code style="background:rgba(245,158,11,0.1);color:var(--amber);padding:1px 6px;border-radius:4px;">Settings → Security → Install Unknown Apps</code>
+      and allow your file manager or browser. This is normal for apps distributed outside the Play Store.
+    </p>
+  </div>
+
+  <!-- ═══ INSTALL STEPS ══ -->
+  <div class="reveal" style="margin-bottom:3rem;">
+    <div class="label">📋 Installation Guide</div>
+    <h2 class="section-title" style="margin-bottom:1.5rem;">3 steps to<br/><span class="text-gradient">get started.</span></h2>
+    <div class="steps-wrap">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <h4>Download the APK</h4>
+          <p>Tap <strong>"Download APK"</strong> above. Your browser will download <code>StealthVault.apk</code> to your Downloads folder. The file is approximately 8 MB.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <h4>Allow Unknown Sources</h4>
+          <p>Go to <code>Settings → Security → Install Unknown Apps</code>. Select your file manager or browser and enable <em>"Allow from this source"</em>. This only needs to be done once.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <h4>Install & Launch</h4>
+          <p>Open your Downloads folder, tap <code>StealthVault.apk</code>, and tap <strong>Install</strong>. Launch the app — it opens as a calculator. Set your secret PIN in the settings, then use it to unlock the vault.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">✓</div>
+        <div class="step-text">
+          <h4>You're Protected</h4>
+          <p>Your vault is active. Import photos, videos, or documents. Lock apps. Set your decoy PIN. Enable the intruder selfie. You're fully protected.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ REQUIREMENTS ══ -->
+  <div class="reveal" style="margin-bottom:3rem;">
+    <div class="label">📱 System Requirements</div>
+    <h2 class="section-title" style="margin-bottom:1.5rem;">Compatibility</h2>
+    <div class="req-grid">
+      <div class="req-card">
+        <div class="req-icon">🤖</div>
+        <div>
+          <div class="req-label">Android Version</div>
+          <div class="req-val">Android 8.0 (Oreo) or higher</div>
+        </div>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">💾</div>
+        <div>
+          <div class="req-label">Storage</div>
+          <div class="req-val">~8 MB install + vault space</div>
+        </div>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">🔑</div>
+        <div>
+          <div class="req-label">Security Hardware</div>
+          <div class="req-val">Android KeyStore (all modern devices)</div>
+        </div>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">📷</div>
+        <div>
+          <div class="req-label">For Intruder Selfie</div>
+          <div class="req-val">Front-facing camera (optional)</div>
+        </div>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">♿</div>
+        <div>
+          <div class="req-label">For App Locker</div>
+          <div class="req-val">Accessibility Service permission</div>
+        </div>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">🌐</div>
+        <div>
+          <div class="req-label">Internet</div>
+          <div class="req-val">Not required — fully offline</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ VERSION HISTORY ══ -->
+  <div class="reveal">
+    <div class="label">📦 Release History</div>
+    <h2 class="section-title" style="margin-bottom:1.5rem;">What's new</h2>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+
+      <div class="version-card">
+        <div class="version-badge-wrap">
+          <span class="version-num">v1.0.0</span>
+          <div class="version-date">May 2026</div>
+        </div>
+        <div class="version-info">
+          <h4>Initial Release 🎉</h4>
+          <ul>
+            <li>Decoy calculator with scientific mode</li>
+            <li>AES-256-GCM encryption with Android KeyStore</li>
+            <li>File vault for photos, videos, and documents</li>
+            <li>App Locker with fake crash screen</li>
+            <li>Intruder selfie via CameraX</li>
+            <li>Decoy PIN + emergency wipe</li>
+            <li>SQLCipher encrypted Room database</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="version-card" style="opacity:0.5; pointer-events:none;">
+        <div class="version-badge-wrap">
+          <span class="version-num" style="color:var(--text-3); background:transparent; border-color:var(--border);">v1.1.0</span>
+          <div class="version-date">Coming soon</div>
+        </div>
+        <div class="version-info">
+          <h4>Planned Features</h4>
+          <ul>
+            <li>Biometric (fingerprint) unlock option</li>
+            <li>Secure notes editor</li>
+            <li>Encrypted browser tab</li>
+            <li>Multiple vault profiles</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ BUILD FROM SOURCE ══ -->
+  <div class="reveal" style="margin-top:3rem;">
+    <div class="label">🛠️ Developers</div>
+    <h2 class="section-title" style="margin-bottom:1rem;">Build from source</h2>
+    <div class="card-glass" style="padding:1.75rem;">
+      <p style="color:var(--text-2); font-size:0.9rem; margin-bottom:1.25rem;">
+        Prefer to compile the APK yourself? Clone the repo and build with Gradle.
+        Requires Android Studio Jellyfish+ and JDK 17.
+      </p>
+      <div class="code-block">git clone https://github.com/Subhan-Haider/Security-Vault.git
+cd Security-Vault
+./gradlew assembleDebug
+# Output: app/build/outputs/apk/debug/app-debug.apk</div>
+      <div style="margin-top:1.25rem;">
+        <a href="https://github.com/Subhan-Haider/Security-Vault" target="_blank" class="btn btn-secondary btn-sm">View Source on GitHub →</a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /max-width -->
+
+<!-- ═══ FOOTER ══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-brand"><div class="nav-brand-icon">🔐</div> Stealth Vault</div>
+        <p>A military-grade encrypted file vault disguised as a fully functional calculator app for Android.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Product</h5>
+        <a href="features.html">Features</a>
+        <a href="download.html">Download</a>
+        <a href="https://github.com/Subhan-Haider/Security-Vault/releases" target="_blank">Releases</a>
+        <a href="https://github.com/Subhan-Haider/Security-Vault" target="_blank">Source Code</a>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+        <a href="terms.html#license">License</a>
+      </div>
+      <div class="footer-col">
+        <h5>Developer</h5>
+        <a href="https://github.com/Subhan-Haider" target="_blank">GitHub Profile</a>
+        <a href="https://github.com/Subhan-Haider/Security-Vault/issues" target="_blank">Report a Bug</a>
+        <a href="https://github.com/Subhan-Haider/Security-Vault/issues" target="_blank">Feature Request</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Subhan Haider. All Rights Reserved.</p>
+      <div class="footer-badges">
+        <span class="badge badge-cyan">AES-256-GCM</span>
+        <span class="badge badge-green">100% Offline</span>
+        <span class="badge badge-indigo">No Tracking</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</div>
+<script src="js/main.js"></script>
+</body>
+</html>

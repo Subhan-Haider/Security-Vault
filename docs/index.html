@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stealth Vault — Hide Files Behind a Calculator</title>
+  <meta name="description" content="Stealth Vault is a military-grade encrypted file vault disguised as a fully functional calculator app for Android. AES-256-GCM, intruder detection, decoy PIN, and more." />
+  <meta name="keywords" content="stealth vault, hidden vault app, encrypted android app, calculator vault, file hider, privacy app" />
+  <meta property="og:title" content="Stealth Vault — Your Privacy, Disguised as Math" />
+  <meta property="og:description" content="Hide files behind a calculator. AES-256 encryption. Intruder selfie. Decoy PIN. Emergency wipe." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ── Hero ── */
+    .hero {
+      position: relative; min-height: calc(100vh - var(--nav-h));
+      display: flex; align-items: center;
+      padding: clamp(4rem,8vw,8rem) clamp(1rem,5vw,3rem);
+      overflow: hidden;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 640px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,212,255,0.07); border: 1px solid rgba(0,212,255,0.2);
+      border-radius: 999px; padding: 6px 16px;
+      font-size: 0.8rem; font-weight: 600; color: var(--cyan);
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge span { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); animation: pulse-glow 2s infinite; }
+    .hero-desc { font-size: 1.1rem; color: var(--text-2); margin-bottom: 2.5rem; max-width: 520px; line-height: 1.7; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 3rem; }
+    .hero-trust { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .trust-item { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-3); }
+    .trust-icon { font-size: 14px; }
+
+    /* ── Mock Phone ── */
+    .hero-visual {
+      position: absolute; right: clamp(-2rem, 5vw, 6rem); top: 50%;
+      transform: translateY(-50%);
+      width: clamp(260px, 30vw, 340px);
+    }
+    .phone-mock {
+      position: relative; width: 100%;
+      animation: float 7s ease-in-out infinite;
+    }
+    .phone-frame {
+      background: linear-gradient(145deg, #1e2840, #111827);
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 40px;
+      padding: 16px 12px;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.7), 0 0 60px rgba(0,212,255,0.12);
+    }
+    .phone-screen {
+      background: #0a0a12;
+      border-radius: 28px;
+      overflow: hidden;
+      aspect-ratio: 9/18;
+      display: flex; flex-direction: column;
+    }
+    .calc-screen-top {
+      background: #111827; padding: 1.5rem 1rem 1rem;
+      text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .calc-expression { font-size: 0.7rem; color: #4b5563; font-family: var(--font-mono); }
+    .calc-number { font-size: 2.2rem; font-weight: 700; color: #f9fafb; font-family: var(--font-mono); }
+    .calc-grid {
+      flex: 1; display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: rgba(255,255,255,0.04); padding: 8px; gap: 6px;
+    }
+    .calc-key {
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; font-weight: 600; aspect-ratio: 1;
+      cursor: pointer; transition: opacity 0.2s;
+    }
+    .calc-key.num { background: #1f2937; color: #f9fafb; }
+    .calc-key.op  { background: #1a2545; color: #00d4ff; }
+    .calc-key.act { background: #374151; color: #d1d5db; }
+    .calc-key.eq  { background: linear-gradient(135deg, #00d4ff, #6366f1); color: #fff; }
+    .calc-key.zero { grid-column: span 2; aspect-ratio: auto; padding: 0 1rem; justify-content: flex-start; }
+    .phone-notch {
+      position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+      width: 80px; height: 24px; background: #0a0a12; border-radius: 12px; z-index: 2;
+    }
+
+    /* ── Stats ── */
+    .stats-section {
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      background: var(--bg-surface);
+    }
+    .stats-inner {
+      max-width: 1160px; margin: 0 auto;
+      padding: 3.5rem clamp(1rem,5vw,3rem);
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem; text-align: center;
+    }
+    .stat-val {
+      font-family: var(--font-display); font-size: 2.4rem; font-weight: 900;
+      background: linear-gradient(135deg, var(--cyan), var(--indigo));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .stat-label { color: var(--text-3); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+    /* ── Feature Strip ── */
+    .feature-strip { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 2rem; }
+    .fstrip-item {
+      flex: 1; min-width: 200px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 1.5rem;
+    }
+    .fstrip-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+    .fstrip-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.4rem; }
+    .fstrip-desc { color: var(--text-2); font-size: 0.82rem; line-height: 1.5; }
+
+    /* ── Layers ── */
+    .layer-wrap { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .layer-row {
+      display: flex; align-items: center; gap: 1.5rem;
+      padding: 1.25rem 1.75rem; border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .layer-row:last-child { border-bottom: none; }
+    .layer-row:hover { background: rgba(255,255,255,0.02); }
+    .layer-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), var(--indigo));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 800; color: #fff; flex-shrink: 0;
+    }
+    .layer-title { font-weight: 700; font-size: 0.95rem; }
+    .layer-sub { color: var(--text-2); font-size: 0.82rem; }
+    .layer-badge { margin-left: auto; flex-shrink: 0; }
+
+    /* ── CTA Section ── */
+    .cta-section {
+      position: relative; overflow: hidden;
+      background: radial-gradient(ellipse at center, rgba(0,212,255,0.07) 0%, transparent 70%);
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    /* ── FAQ ── */
+    .faq-item { border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 10px; overflow: hidden; }
+    .faq-q {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 1.4rem; cursor: pointer; font-weight: 600; font-size: 0.95rem;
+      transition: background 0.2s;
+    }
+    .faq-q:hover { background: rgba(255,255,255,0.03); }
+    .faq-arrow { font-size: 1.1rem; transition: transform 0.3s; color: var(--text-3); }
+    .faq-item.open .faq-arrow { transform: rotate(45deg); color: var(--cyan); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.3s; }
+    .faq-item.open .faq-a { max-height: 300px; }
+    .faq-a-inner { padding: 0 1.4rem 1.2rem; color: var(--text-2); font-size: 0.9rem; line-height: 1.7; }
+
+    @media (max-width: 900px) {
+      .hero-visual { display: none; }
+      .stats-inner { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 480px) {
+      .stats-inner { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ NAV ══ -->
+<nav class="nav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-brand-icon">🔐</div>
+    Stealth Vault
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="features.html">Features</a>
+    <a href="download.html">Download</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="download.html" class="nav-cta">Get App ↓</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">🏠 Home</a>
+  <a href="features.html">⚡ Features</a>
+  <a href="download.html">📥 Download</a>
+  <a href="privacy.html">🔒 Privacy Policy</a>
+  <a href="terms.html">📋 Terms</a>
+</div>
+
+<!-- ═══════════════════════════════════════ HERO ══ -->
+<div class="page-wrap">
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-badge"><span></span> Now Available for Android</div>
+
+    <h1 class="hero-title fade-up">Your secrets,<br/><span class="text-gradient">disguised as math.</span></h1>
+
+    <p class="hero-desc fade-up fade-up-1">
+      Stealth Vault looks like an ordinary calculator to everyone else.
+      Enter your secret PIN and press <code style="background:rgba(0,212,255,0.1);padding:2px 7px;border-radius:5px;color:var(--cyan);">=</code>
+      — a hardware-encrypted private vault opens instantly.
+    </p>
+
+    <div class="hero-actions fade-up fade-up-2">
+      <a href="download.html" class="btn btn-primary btn-lg">
+        <span>📥</span> Download APK
+      </a>
+      <a href="features.html" class="btn btn-secondary btn-lg">
+        <span>✨</span> See All Features
+      </a>
+    </div>
+
+    <div class="hero-trust fade-up fade-up-3">
+      <div class="trust-item"><span class="trust-icon">🔐</span> AES-256-GCM Encryption</div>
+      <div class="trust-item"><span class="trust-icon">🛡️</span> Android KeyStore HSM</div>
+      <div class="trust-item"><span class="trust-icon">👁️</span> Zero Visible Vault UI</div>
+      <div class="trust-item"><span class="trust-icon">📷</span> Intruder Selfie Detection</div>
+    </div>
+  </div>
+
+  <!-- Phone Mock -->
+  <div class="hero-visual">
+    <div class="phone-mock">
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="calc-screen-top">
+            <div class="calc-expression">520 × 3 =</div>
+            <div class="calc-number">1,560</div>
+          </div>
+          <div class="calc-grid">
+            <div class="calc-key act">AC</div>
+            <div class="calc-key act">±</div>
+            <div class="calc-key act">%</div>
+            <div class="calc-key op">÷</div>
+            <div class="calc-key num">7</div>
+            <div class="calc-key num">8</div>
+            <div class="calc-key num">9</div>
+            <div class="calc-key op">×</div>
+            <div class="calc-key num">4</div>
+            <div class="calc-key num">5</div>
+            <div class="calc-key num">6</div>
+            <div class="calc-key op">−</div>
+            <div class="calc-key num">1</div>
+            <div class="calc-key num">2</div>
+            <div class="calc-key num">3</div>
+            <div class="calc-key op">+</div>
+            <div class="calc-key num zero">0</div>
+            <div class="calc-key num">.</div>
+            <div class="calc-key eq">=</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ STATS ══ -->
+<div class="stats-section">
+  <div class="stats-inner">
+    <div>
+      <div class="stat-val" data-count="256" data-suffix="-bit">0-bit</div>
+      <div class="stat-label">Encryption Key Size</div>
+    </div>
+    <div>
+      <div class="stat-val" data-count="4">0</div>
+      <div class="stat-label">Security Layers</div>
+    </div>
+    <div>
+      <div class="stat-val" data-count="0" data-suffix=" Logs">0 Logs</div>
+      <div class="stat-label">Data Sent to Servers</div>
+    </div>
+    <div>
+      <div class="stat-val" data-count="100" data-suffix="%">0%</div>
+      <div class="stat-label">Offline & Private</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ FEATURES STRIP ══ -->
+<section class="section">
+  <div class="reveal">
+    <div class="label">⚡ Core Features</div>
+    <h2 class="section-title">Everything hidden.<br/><span class="text-gradient">Nothing suspicious.</span></h2>
+    <p class="section-sub">Built from the ground up to protect your privacy without drawing any attention.</p>
+  </div>
+
+  <div class="feature-strip">
+    <div class="fstrip-item reveal reveal-delay-1">
+      <div class="fstrip-icon">🧮</div>
+      <div class="fstrip-title">Decoy Calculator</div>
+      <div class="fstrip-desc">Fully functional scientific calculator. No one knows what's hiding underneath.</div>
+    </div>
+    <div class="fstrip-item reveal reveal-delay-2">
+      <div class="fstrip-icon">🔑</div>
+      <div class="fstrip-title">AES-256-GCM Vault</div>
+      <div class="fstrip-desc">Hardware-backed keys inside Android KeyStore. Files encrypted before storage.</div>
+    </div>
+    <div class="fstrip-item reveal reveal-delay-3">
+      <div class="fstrip-icon">📱</div>
+      <div class="fstrip-title">App Locker</div>
+      <div class="fstrip-desc">Lock any app. Show a fake crash screen to intruders — bypass with your gesture.</div>
+    </div>
+    <div class="fstrip-item reveal reveal-delay-4">
+      <div class="fstrip-icon">📷</div>
+      <div class="fstrip-title">Intruder Selfie</div>
+      <div class="fstrip-desc">Wrong PIN? Front camera silently snaps a photo and logs the attempt.</div>
+    </div>
+    <div class="fstrip-item reveal">
+      <div class="fstrip-icon">🪤</div>
+      <div class="fstrip-title">Decoy PIN</div>
+      <div class="fstrip-desc">Secondary PIN opens an empty decoy vault. Fool anyone under pressure.</div>
+    </div>
+    <div class="fstrip-item reveal reveal-delay-1">
+      <div class="fstrip-icon">💥</div>
+      <div class="fstrip-title">Emergency Wipe</div>
+      <div class="fstrip-desc">5 consecutive failures triggers a complete and permanent data wipe.</div>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top:2.5rem;" class="reveal">
+    <a href="features.html" class="btn btn-secondary">View all features →</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════ SECURITY LAYERS ══ -->
+<section class="section">
+  <div class="reveal">
+    <div class="label">🛡️ Security Model</div>
+    <h2 class="section-title">Defense in <span class="text-gradient">depth.</span></h2>
+    <p class="section-sub">Stealth Vault uses 4 independent security layers. Breaking one doesn't break the rest.</p>
+  </div>
+
+  <div class="layer-wrap reveal">
+    <div class="layer-row">
+      <div class="layer-num">1</div>
+      <div>
+        <div class="layer-title">Obscurity — The Calculator Disguise</div>
+        <div class="layer-sub">No vault icon, no vault name. Looks exactly like a calculator. Zero visible entry points.</div>
+      </div>
+      <div class="layer-badge"><span class="badge badge-cyan">Active</span></div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-num">2</div>
+      <div>
+        <div class="layer-title">Access Control — PIN + Decoy PIN</div>
+        <div class="layer-sub">Real PIN opens the vault. Decoy PIN opens an empty dummy vault. Auto-lock on inactivity.</div>
+      </div>
+      <div class="layer-badge"><span class="badge badge-green">Active</span></div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-num">3</div>
+      <div>
+        <div class="layer-title">Cryptography — AES-256-GCM + Android KeyStore</div>
+        <div class="layer-sub">Keys sealed inside the hardware security module. SQLCipher encrypts the database schema.</div>
+      </div>
+      <div class="layer-badge"><span class="badge badge-indigo">HSM-Backed</span></div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-num">4</div>
+      <div>
+        <div class="layer-title">Anti-Forensics — Intruder Detection + Wipe</div>
+        <div class="layer-sub">Photo on wrong PIN. Emergency wipe after 5 failures. Files stripped from Android Gallery.</div>
+      </div>
+      <div class="layer-badge"><span class="badge badge-amber">Proactive</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════ FAQ ══ -->
+<section class="section">
+  <div class="reveal">
+    <div class="label">❓ FAQ</div>
+    <h2 class="section-title">Common <span class="text-gradient">questions.</span></h2>
+  </div>
+
+  <div style="max-width:720px;" class="reveal">
+    <div class="faq-item">
+      <div class="faq-q">Is my data ever uploaded to a server? <span class="faq-arrow">+</span></div>
+      <div class="faq-a"><div class="faq-a-inner">No. Stealth Vault is 100% offline. All files and data remain on your device only. No accounts, no cloud sync, no telemetry of any kind.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What happens if I forget my PIN? <span class="faq-arrow">+</span></div>
+      <div class="faq-a"><div class="faq-a-inner">For security reasons, there is no PIN recovery mechanism. This is intentional — if someone could recover your PIN, so could an attacker. Keep your PIN safe.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I use Stealth Vault on multiple devices? <span class="faq-arrow">+</span></div>
+      <div class="faq-a"><div class="faq-a-inner">Currently, Stealth Vault is a single-device app. Vault data is encrypted with keys tied to your specific device's Android KeyStore and cannot be transferred automatically.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What encryption does Stealth Vault use? <span class="faq-arrow">+</span></div>
+      <div class="faq-a"><div class="faq-a-inner">AES-256-GCM (Galois/Counter Mode) with authentication tags. Encryption keys are generated and stored inside the Android Keystore (Hardware Security Module), never exposed to the app's memory.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Does the App Locker work on all Android apps? <span class="faq-arrow">+</span></div>
+      <div class="faq-a"><div class="faq-a-inner">The App Locker works with most standard Android apps. It uses the Accessibility Service API to detect foreground app changes. Some system apps or launchers may behave differently.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ CTA ══ -->
+<section class="cta-section">
+  <div class="section" style="text-align:center;">
+    <div class="reveal">
+      <div class="label" style="justify-content:center;">📥 Free Download</div>
+      <h2 class="section-title" style="max-width:520px; margin:0 auto 1rem;">Ready to hide<br/><span class="text-gradient">everything?</span></h2>
+      <p class="section-sub" style="margin:0 auto 2.5rem;">Free. Offline. No account required. Just download and use.</p>
+      <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+        <a href="download.html" class="btn btn-primary btn-lg">📥 Download APK</a>
+        <a href="https://github.com/Subhan-Haider/Security-Vault" target="_blank" class="btn btn-secondary btn-lg">⭐ GitHub Source</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ FOOTER ══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-brand">
+          <div class="nav-brand-icon">🔐</div> Stealth Vault
+        </div>
+        <p>A military-grade encrypted file vault disguised as a fully functional calculator app for Android.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Product</h5>
+        <a href="features.html">Features</a>
+        <a href="download.html">Download</a>
+        <a href="https://github.com/Subhan-Haider/Security-Vault/releases" target="_blank">Releases</a>
+        <a href="https://github.com/Subhan-Haider/Security-Vault" target="_blank">Source Code</a>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+        <a href="terms.html#license">License</a>
+      </div>
+      <div class="footer-col">
+        <h5>Developer</h5>
+        <a href="https://github.com/Subhan-Haider" target="_blank">GitHub Profile</a>
+        <a href="https://github.com/Subhan-Haider/Security-Vault/issues" target="_blank">Report a Bug</a>
+        <a href="https://github.com/Subhan-Haider/Security-Vault/issues" target="_blank">Feature Request</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Subhan Haider. All Rights Reserved. Released under a <a href="terms.html#license" style="color:var(--cyan);">Custom Proprietary License</a>.</p>
+      <div class="footer-badges">
+        <span class="badge badge-cyan">AES-256-GCM</span>
+        <span class="badge badge-green">100% Offline</span>
+        <span class="badge badge-indigo">No Tracking</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</div>
+<script src="js/main.js"></script>
+</body>
+</html>

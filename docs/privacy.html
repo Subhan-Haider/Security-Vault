@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Stealth Vault</title>
+  <meta name="description" content="Privacy Policy for Stealth Vault. Read about our 100% offline, local-only encryption policy. Zero server storage, zero tracking." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ NAV ══ -->
+<nav class="nav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-brand-icon">🔐</div>
+    Stealth Vault
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="download.html">Download</a>
+    <a href="privacy.html" class="active">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="download.html" class="nav-cta">Get App ↓</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">🏠 Home</a>
+  <a href="features.html">⚡ Features</a>
+  <a href="download.html">📥 Download</a>
+  <a href="privacy.html">🔒 Privacy Policy</a>
+  <a href="terms.html">📋 Terms</a>
+</div>
+
+<!-- ═══════════════════════════════════════ PAGE WRAP ══ -->
+<div class="page-wrap">
+
+  <div class="page-header">
+    <div class="label">🔒 Privacy First</div>
+    <h1 class="section-title">Privacy Policy</h1>
+    <p class="section-sub" style="margin: 0 auto;">Effective Date: May 25, 2026. Your privacy is not a feature — it's the core philosophy.</p>
+  </div>
+
+  <section class="section">
+    <div class="prose reveal">
+      <div class="info-box">
+        <strong>TL;DR (Too Long; Didn't Read):</strong> Stealth Vault is a <strong>100% offline app</strong>. It does not connect to the internet, does not use external servers, does not have accounts, and collects <strong>zero analytics, telemetry, or user data</strong>. All files you lock are encrypted locally on your own device and cannot be accessed by anyone, including the developer.
+      </div>
+
+      <h2>1. Information We Collect (Or Rather, Don't Collect)</h2>
+      <p>
+        Because Stealth Vault operates entirely offline on your mobile device, we do not collect, transmit, store, or share any personal information, files, metadata, or logs. Specifically:
+      </p>
+      <ul>
+        <li><strong>No Cloud Storage:</strong> Your locked files are never uploaded to any cloud storage or remote servers. Decryption and access occur purely on-device.</li>
+        <li><strong>No Accounts:</strong> You do not need to create an account, sign up with an email, or link a social profile to use the app.</li>
+        <li><strong>No Analytics or Telemetry:</strong> There are no third-party tracking SDKs, Google Analytics, Firebase Crashlytics, or marketing cookies embedded within the application.</li>
+      </ul>
+
+      <h2>2. On-Device Data Storage & Encryption</h2>
+      <p>
+        Any file (photo, video, audio, or document) that you import into the Stealth Vault is immediately subjected to the following security protocols:
+      </p>
+      <ul>
+        <li><strong>AES-256-GCM Encryption:</strong> Files are encrypted using AES (Advanced Encryption Standard) in Galois/Counter Mode with 256-bit keys.</li>
+        <li><strong>Hardware-Backed Cryptography:</strong> Keys are generated and sealed inside your device's <strong>Android KeyStore System</strong> (Hardware Security Module / TrustZone), keeping them isolated from application memory.</li>
+        <li><strong>SQLCipher Database:</strong> Metadata about your folders, files, and settings is stored in a local SQLite database encrypted with SQLCipher.</li>
+      </ul>
+
+      <h2>3. Device Permissions & How They Are Used</h2>
+      <p>
+        Stealth Vault requests specific permissions on your Android device to perform its security functions. Here is exactly why they are needed:
+      </p>
+      
+      <h3>A. Storage / Manage External Storage Permission</h3>
+      <p>
+        Required to search, select, import, and export files to and from the vault. Once files are imported, the app deletes the unencrypted originals from your public gallery/directories (subject to user confirmation) and secures them in the app's private sandbox storage.
+      </p>
+
+      <h3>B. Camera Permission</h3>
+      <p>
+        Used exclusively for the <strong>Intruder Selfie</strong> feature. When enabled, if an incorrect PIN is entered, the app uses CameraX to silently capture a snapshot of the person holding the device. This photo is saved directly into the encrypted, private local vault database so you can view it. It is never transmitted off your device.
+      </p>
+
+      <h3>C. Accessibility Service API</h3>
+      <p>
+        Used solely for the <strong>App Locker</strong> module. It allows the app to monitor which application is currently active in the foreground. If the active app is on your lock list, Stealth Vault displays a fake crash screen overlay.
+      </p>
+      <div class="warn-box">
+        <strong>Important Notice on Accessibility:</strong> The Accessibility Service is used strictly locally. It does not record keystrokes, capture screen content, monitor login credentials, or send any accessibility data over the network.
+      </div>
+
+      <h2>4. Data Loss & Recovery</h2>
+      <p>
+        Because Stealth Vault is completely decentralized and offline:
+      </p>
+      <ul>
+        <li><strong>No Password Recovery:</strong> There is no backup server to reset your password or PIN. If you forget your PIN, your encrypted data cannot be recovered.</li>
+        <li><strong>Wipe and Reset:</strong> If you trigger the Emergency Wipe (by entering the wrong PIN 5 consecutive times), all encryption keys and local files will be permanently deleted and are unrecoverable.</li>
+        <li><strong>Device Uninstallation:</strong> Deleting the Stealth Vault app from your device will also delete the app's secure private folder and all encrypted files stored within it. Always export/restore your files before uninstalling.</li>
+      </ul>
+
+      <h2>5. Changes to This Privacy Policy</h2>
+      <p>
+        We may update this Privacy Policy from time to time. However, the fundamental principle—that the app remains 100% offline with zero data collection—will never change. Any updates to this policy will be posted on this website.
+      </p>
+
+      <h2>6. Contact Us</h2>
+      <p>
+        If you have any questions about this Privacy Policy, you can open an issue on the official GitHub Repository:
+      </p>
+      <p>
+        <a href="https://github.com/Subhan-Haider/Security-Vault" target="_blank">https://github.com/Subhan-Haider/Security-Vault</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ FOOTER ══ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-brand">
+            <div class="nav-brand-icon">🔐</div> Stealth Vault
+          </div>
+          <p>A military-grade encrypted file vault disguised as a fully functional calculator app for Android.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Product</h5>
+          <a href="features.html">Features</a>
+          <a href="download.html">Download</a>
+          <a href="https://github.com/Subhan-Haider/Security-Vault/releases" target="_blank">Releases</a>
+          <a href="https://github.com/Subhan-Haider/Security-Vault" target="_blank">Source Code</a>
+        </div>
+        <div class="footer-col">
+          <h5>Legal</h5>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+          <a href="terms.html#license">License</a>
+        </div>
+        <div class="footer-col">
+          <h5>Developer</h5>
+          <a href="https://github.com/Subhan-Haider" target="_blank">GitHub Profile</a>
+          <a href="https://github.com/Subhan-Haider/Security-Vault/issues" target="_blank">Report a Bug</a>
+          <a href="https://github.com/Subhan-Haider/Security-Vault/issues" target="_blank">Feature Request</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Subhan Haider. All Rights Reserved. Released under a <a href="terms.html#license" style="color:var(--cyan);">Custom Proprietary License</a>.</p>
+        <div class="footer-badges">
+          <span class="badge badge-cyan">AES-256-GCM</span>
+          <span class="badge badge-green">100% Offline</span>
+          <span class="badge badge-indigo">No Tracking</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
