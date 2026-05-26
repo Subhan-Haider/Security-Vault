@@ -74,17 +74,46 @@
     .calc-key {
       border-radius: 10px; display: flex; align-items: center; justify-content: center;
       font-size: 0.9rem; font-weight: 600; aspect-ratio: 1;
-      cursor: pointer; transition: opacity 0.2s;
+      cursor: pointer; transition: transform 0.1s, background 0.15s, box-shadow 0.15s;
+      user-select: none; border: none; outline: none;
+    }
+    .calc-key:active, .calc-key.pressed {
+      transform: scale(0.88);
+      box-shadow: 0 0 14px rgba(0,212,255,0.35);
     }
     .calc-key.num { background: #1f2937; color: #f9fafb; }
+    .calc-key.num:hover { background: #2d3748; }
     .calc-key.op  { background: #1a2545; color: #00d4ff; }
+    .calc-key.op:hover { background: #1e2f5e; }
     .calc-key.act { background: #374151; color: #d1d5db; }
+    .calc-key.act:hover { background: #4b5563; }
     .calc-key.eq  { background: linear-gradient(135deg, #00d4ff, #6366f1); color: #fff; }
+    .calc-key.eq:hover { filter: brightness(1.15); }
     .calc-key.zero { grid-column: span 2; aspect-ratio: auto; padding: 0 1rem; justify-content: flex-start; }
     .phone-notch {
       position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
       width: 80px; height: 24px; background: #0a0a12; border-radius: 12px; z-index: 2;
     }
+    /* Vault unlock overlay */
+    .vault-overlay {
+      position: absolute; inset: 0; border-radius: 28px;
+      background: linear-gradient(135deg, #0a0f1e, #0d1b3e);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 12px; opacity: 0; pointer-events: none;
+      transition: opacity 0.4s ease;
+      z-index: 10;
+    }
+    .vault-overlay.show { opacity: 1; pointer-events: all; }
+    .vault-lock-icon { font-size: 2.8rem; animation: vault-pop 0.5s cubic-bezier(0.34,1.56,0.64,1) both; }
+    .vault-overlay h4 { color: #00d4ff; font-size: 0.9rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+    .vault-overlay p  { color: #6b7280; font-size: 0.65rem; text-align: center; max-width: 140px; line-height: 1.5; }
+    @keyframes vault-pop { from { transform: scale(0.3) rotate(-20deg); opacity:0; } to { transform: scale(1) rotate(0deg); opacity:1; } }
+    .calc-hint {
+      position: absolute; bottom: -28px; left: 50%; transform: translateX(-50%);
+      font-size: 0.65rem; color: var(--text-3); white-space: nowrap;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .calc-hint code { background: rgba(0,212,255,0.1); color: var(--cyan); padding: 1px 5px; border-radius: 3px; font-size: 0.62rem; }
 
     /* ── Stats ── */
     .stats-section {
@@ -253,39 +282,49 @@
     </div>
   </div>
 
-  <!-- Phone Mock -->
+  <!-- Phone Mock — Live Interactive Demo -->
   <div class="hero-visual">
-    <div class="phone-mock">
+    <div class="phone-mock" style="position:relative;">
       <div class="phone-frame">
         <div class="phone-notch"></div>
-        <div class="phone-screen">
+        <div class="phone-screen" style="position:relative;">
+
+          <!-- Vault unlock overlay -->
+          <div class="vault-overlay" id="vaultOverlay">
+            <div class="vault-lock-icon">🔓</div>
+            <h4>Vault Unlocked</h4>
+            <p>Welcome back. Your encrypted files are ready.</p>
+            <button onclick="closeVault()" style="margin-top:8px;background:rgba(0,212,255,0.15);color:#00d4ff;border:1px solid rgba(0,212,255,0.3);border-radius:8px;padding:6px 14px;font-size:0.65rem;font-weight:700;cursor:pointer;letter-spacing:0.05em;">LOCK VAULT</button>
+          </div>
+
           <div class="calc-screen-top">
-            <div class="calc-expression">520 × 3 =</div>
-            <div class="calc-number">1,560</div>
+            <div class="calc-expression" id="calcExpr" style="min-height:14px;"></div>
+            <div class="calc-number" id="calcDisplay">0</div>
           </div>
           <div class="calc-grid">
-            <div class="calc-key act">AC</div>
-            <div class="calc-key act">±</div>
-            <div class="calc-key act">%</div>
-            <div class="calc-key op">÷</div>
-            <div class="calc-key num">7</div>
-            <div class="calc-key num">8</div>
-            <div class="calc-key num">9</div>
-            <div class="calc-key op">×</div>
-            <div class="calc-key num">4</div>
-            <div class="calc-key num">5</div>
-            <div class="calc-key num">6</div>
-            <div class="calc-key op">−</div>
-            <div class="calc-key num">1</div>
-            <div class="calc-key num">2</div>
-            <div class="calc-key num">3</div>
-            <div class="calc-key op">+</div>
-            <div class="calc-key num zero">0</div>
-            <div class="calc-key num">.</div>
-            <div class="calc-key eq">=</div>
+            <button class="calc-key act" data-key="AC">AC</button>
+            <button class="calc-key act" data-key="±">±</button>
+            <button class="calc-key act" data-key="%">%</button>
+            <button class="calc-key op"  data-key="÷">÷</button>
+            <button class="calc-key num" data-key="7">7</button>
+            <button class="calc-key num" data-key="8">8</button>
+            <button class="calc-key num" data-key="9">9</button>
+            <button class="calc-key op"  data-key="×">×</button>
+            <button class="calc-key num" data-key="4">4</button>
+            <button class="calc-key num" data-key="5">5</button>
+            <button class="calc-key num" data-key="6">6</button>
+            <button class="calc-key op"  data-key="−">−</button>
+            <button class="calc-key num" data-key="1">1</button>
+            <button class="calc-key num" data-key="2">2</button>
+            <button class="calc-key num" data-key="3">3</button>
+            <button class="calc-key op"  data-key="+">+</button>
+            <button class="calc-key num zero" data-key="0">0</button>
+            <button class="calc-key num" data-key=".">.</button>
+            <button class="calc-key eq"  data-key="=">=</button>
           </div>
         </div>
       </div>
+      <div class="calc-hint">🔐 Try secret PIN: <code>1234 =</code></div>
     </div>
   </div>
 </section>
@@ -532,5 +571,130 @@
 
 </div>
 <script src="js/main.js"></script>
+<script>
+(function() {
+  const SECRET_PIN = '1234';
+  const display  = document.getElementById('calcDisplay');
+  const expr     = document.getElementById('calcExpr');
+  const overlay  = document.getElementById('vaultOverlay');
+  if (!display) return;
+
+  let current   = '0';
+  let stored    = null;
+  let operator  = null;
+  let justCalc  = false;
+  let pinBuffer = '';
+
+  function fmt(n) {
+    const s = parseFloat(n);
+    if (isNaN(s)) return 'Error';
+    // max 10 chars on small screen
+    const str = s.toLocaleString('en-US', { maximumFractionDigits: 8 });
+    return str.length > 11 ? s.toExponential(4) : str;
+  }
+
+  function updateDisplay() {
+    display.textContent = fmt(current);
+    // shrink font if long
+    display.style.fontSize = current.length > 8 ? '1.4rem' : '2.2rem';
+  }
+
+  function pressAnim(btn) {
+    btn.classList.add('pressed');
+    setTimeout(() => btn.classList.remove('pressed'), 150);
+  }
+
+  function handleKey(key, btn) {
+    pressAnim(btn);
+
+    if (key === 'AC') {
+      current = '0'; stored = null; operator = null; justCalc = false;
+      pinBuffer = '';
+      expr.textContent = '';
+      updateDisplay();
+      return;
+    }
+
+    if (key === '±') {
+      current = String(-parseFloat(current));
+      updateDisplay(); return;
+    }
+
+    if (key === '%') {
+      current = String(parseFloat(current) / 100);
+      updateDisplay(); return;
+    }
+
+    const ops = ['÷', '×', '−', '+'];
+    if (ops.includes(key)) {
+      stored = parseFloat(current);
+      operator = key;
+      expr.textContent = fmt(current) + ' ' + key;
+      justCalc = false;
+      current = '0';
+      pinBuffer = '';
+      return;
+    }
+
+    if (key === '=') {
+      // Check secret PIN
+      if (pinBuffer === SECRET_PIN) {
+        expr.textContent = '';
+        display.textContent = '🔓';
+        setTimeout(() => {
+          overlay.classList.add('show');
+        }, 300);
+        pinBuffer = '';
+        return;
+      }
+
+      if (operator !== null && stored !== null) {
+        const b = parseFloat(current);
+        let result;
+        expr.textContent = fmt(stored) + ' ' + operator + ' ' + fmt(current) + ' =';
+        switch (operator) {
+          case '÷': result = stored / b; break;
+          case '×': result = stored * b; break;
+          case '−': result = stored - b; break;
+          case '+': result = stored + b; break;
+        }
+        current = String(result);
+        stored = null; operator = null; justCalc = true;
+        pinBuffer = '';
+        updateDisplay();
+      }
+      return;
+    }
+
+    if (key === '.') {
+      if (justCalc) { current = '0.'; justCalc = false; }
+      else if (!current.includes('.')) current += '.';
+      updateDisplay(); return;
+    }
+
+    // Digit
+    if (justCalc) { current = key; justCalc = false; }
+    else current = current === '0' ? key : current + key;
+
+    // Track PIN buffer
+    pinBuffer += key;
+    if (pinBuffer.length > SECRET_PIN.length) pinBuffer = pinBuffer.slice(-SECRET_PIN.length);
+
+    updateDisplay();
+  }
+
+  document.querySelectorAll('.calc-key[data-key]').forEach(btn => {
+    btn.addEventListener('click', () => handleKey(btn.dataset.key, btn));
+  });
+
+  updateDisplay();
+})();
+
+function closeVault() {
+  document.getElementById('vaultOverlay').classList.remove('show');
+  document.getElementById('calcDisplay').textContent = '0';
+  document.getElementById('calcExpr').textContent = '';
+}
+</script>
 </body>
 </html>
