@@ -1,191 +1,291 @@
-# 🛡️ Stealth Vault
+<div align="center">
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Subhan-Haider/Stealth-Vault/main/app/src/main/res/drawable/ic_vault_logo.png" alt="Stealth Vault Logo" width="128" height="128">
-</p>
+<br/>
 
-<p align="center">
-  <strong>An impenetrable, decoy-disguised privacy sandbox for Android & Web.</strong>
-</p>
+```
+███████╗████████╗███████╗ █████╗ ██╗  ████████╗██╗  ██╗    ██╗   ██╗ █████╗ ██╗   ██╗██╗  ████████╗
+██╔════╝╚══██╔══╝██╔════╝██╔══██╗██║  ╚══██╔══╝██║  ██║    ██║   ██║██╔══██╗██║   ██║██║  ╚══██╔══╝
+███████╗   ██║   █████╗  ███████║██║     ██║   ███████║    ██║   ██║███████║██║   ██║██║     ██║   
+╚════██║   ██║   ██╔══╝  ██╔══██║██║     ██║   ██╔══██║    ╚██╗ ██╔╝██╔══██║██║   ██║██║     ██║   
+███████║   ██║   ███████╗██║  ██║███████╗██║   ██║  ██║     ╚████╔╝ ██║  ██║╚██████╔╝███████╗██║   
+╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝   ╚═╝  ╚═╝      ╚═══╝  ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝   
+```
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Android-Kotlin-3498db?style=for-the-badge&logo=kotlin" alt="Kotlin">
-  <img src="https://img.shields.io/badge/Web-React%20%7C%20TS-61dafb?style=for-the-badge&logo=react" alt="React & TS">
-  <img src="https://img.shields.io/badge/Encryption-AES--256--GCM-2ecc71?style=for-the-badge" alt="AES-256-GCM">
-  <img src="https://img.shields.io/badge/License-Proprietary%20%7C%20No%20Commercial%20Use-e74c3c?style=for-the-badge" alt="Proprietary License">
-</p>
+### 🔐 *Your secrets, disguised as math.*
 
----
+<br/>
 
-## 📖 Table of Contents
-1. [Overview](#-overview)
-2. [Key Features](#-key-features)
-3. [Architecture & Technology Stack](#-architecture--technology-stack)
-4. [Project Directory Structure](#-project-directory-structure)
-5. [Getting Started](#-getting-started)
-   - [Android App Setup](#android-app-setup)
-   - [Web Companion Setup](#web-companion-setup)
-6. [Security Architecture](#-security-architecture)
-7. [Contributing](#-contributing)
-8. [License](#-license)
+[![Kotlin](https://img.shields.io/badge/Android-Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org)
+[![React](https://img.shields.io/badge/Web-React_+_TypeScript-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![AES-256](https://img.shields.io/badge/Encryption-AES--256--GCM-00C853?style=for-the-badge&logo=gnuprivacyguard&logoColor=white)](#)
+[![Hilt](https://img.shields.io/badge/DI-Hilt-FF6F00?style=for-the-badge&logo=android&logoColor=white)](#)
+[![License](https://img.shields.io/badge/License-Proprietary-FF1744?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](LICENSE)
 
----
+<br/>
 
-## 🔍 Overview
+> **Stealth Vault** is disguised as a fully functional scientific calculator.  
+> Enter the secret PIN and press `=` — and a hardware-encrypted private vault opens.  
+> *Nobody will ever know what's hiding behind the numbers.*
 
-**Stealth Vault** is a high-security, multi-platform privacy ecosystem designed to hide and encrypt sensitive files, photos, videos, and applications. 
+<br/>
 
-To the casual observer, Stealth Vault is a fully functional, premium calculator. However, entering a secret mathematical sequence or PIN code triggers the transition into an encrypted sandbox vault.
-
-The repository is structured as a monorepo containing:
-- **📱 Android App (`/app`)**: The native high-security Android application built with Kotlin, Clean Architecture, and Jetpack Security APIs.
-- **💻 Web App (`/web`)**: A high-fidelity React + TypeScript companion app replicating the decoy calculator interface, equipped with animations, auto-locking, and storage mockup options.
+</div>
 
 ---
 
-## 🌟 Key Features
+## 📌 Table of Contents
 
-### 🧮 1. The Ultimate Decoy Calculator
-- **Functional Math Engine**: Performs scientific calculation sequences (`sin`, `cos`, `log`, `π`, `e`, etc.) using `exp4j` (Android) and dynamic evaluation (Web).
-- **Stealth Trigger**: Opens only when your secret passcode (e.g., `1337`) is entered and the `=` operator is pressed.
-- **Premium Aesthetics**: Adheres to modern Material Design 3 guidelines (Android) and HSL-tailored glassmorphism styles (Web).
-
-### 🔐 2. Cryptographic Security Sandbox
-- **Hardware-Backed Encryption**: AES-256 GCM authenticated encryption utilizing keys sealed within the **Android KeyStore (HSM)**.
-- **Gallery & System OS Isolation**: Files transferred to the vault are immediately stripped of metadata and hidden from system scanners, accessible only within the decrypted sandbox.
-- **Encrypted Local Database**: Structured data management via Room DB fortified by **SQLCipher** database-level encryption.
-
-### 📱 3. App Locker with "Fake Crash" Overlay
-- **Background Interceptor**: Locks sensitive system or third-party apps (e.g., messaging, email, gallery).
-- **Social Engineering Cover**: Instead of showing a normal password prompt, it displays a highly convincing **"Application Error: Force Close"** overlay. The intruder assumes the application crashed, while you can bypass it with a hidden gesture.
-
-### 🕵️ 4. Active Anti-Intruder Protocols
-- **Intruder Selfie**: Leverages Google's `CameraX` API to silently take a front-facing photograph whenever an incorrect PIN is entered.
-- **Decoy PIN System**: Configure a secondary decoy PIN. When entered, it unlocks a dummy vault database, showing harmless files and decoy folder structures.
-- **Emergency Wipe**: Wipes all encrypted credentials and file metadata if 5 consecutive failed access attempts occur.
+- [✨ Overview](#-overview)
+- [🌟 Features](#-features)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📁 Project Structure](#-project-structure)
+- [🚀 Getting Started](#-getting-started)
+- [🛡️ Security Architecture](#️-security-architecture)
+- [⚖️ License](#️-license)
 
 ---
 
-## 🛠️ Architecture & Technology Stack
+## ✨ Overview
 
-### 📱 Android Application
-* **Development Language:** Kotlin
-* **Architecture:** MVVM (Model-View-ViewModel) + Clean Architecture principles
-* **UI/Theming:** Material 3 Components, Jetpack Navigation, custom themes
-* **Database:** Room DB + SQLCipher
-* **Security:** Android Jetpack Security, Android KeyStore (Hardware Security Module)
-* **Dependency Injection:** Hilt
-* **Camera APIs:** CameraX
+**Stealth Vault** is a multi-platform privacy ecosystem. On the surface, it's an elegant calculator app. Underneath, it's a hardened encrypted sandbox for your most sensitive files, photos, videos, and app data.
+
+This monorepo contains **two applications**:
+
+| Platform | Directory | Description |
+|:---:|:---:|:---|
+| 📱 **Android** | `/app` | Native Kotlin app with hardware-backed AES-256 encryption, intruder detection, app locking, and a decoy PIN system |
+| 💻 **Web** | `/web` | React + TypeScript companion — same decoy calculator UI, auto-lock, glassmorphism design, and Framer Motion animations |
+
+---
+
+## 🌟 Features
+
+<br/>
+
+### 🧮 &nbsp; Decoy Calculator — The Perfect Cover
+
+> Looks and behaves exactly like a real scientific calculator.
+
+| What it does | How |
+|:---|:---|
+| Full math expressions | `exp4j` (Android) / `Function()` eval (Web) |
+| Scientific functions | `sin`, `cos`, `log`, `√`, `x²`, `π`, `e` |
+| Memory operations | `MC`, `MR`, `M+`, `M−` |
+| Calculation history | Tap the clock icon to reveal past results |
+| Swipe to delete | Swipe left/right on the display to backspace |
+| Haptic feedback | Tactile response on every button press |
+| **Secret unlock trigger** | Enter PIN → press `=` → vault opens silently |
+
+---
+
+### 🔐 &nbsp; Hardware-Grade Encryption
+
+> Your files are invisible to the OS and encrypted at rest.
+
+```
+User PIN  ──►  Android KeyStore (HSM)  ──►  AES-256-GCM Key Derivation
+                                                      │
+                                                      ▼
+                               Encrypted Blob  ◄──  File / Photo / Video
+                               (stored in app private dir — invisible to file explorers)
+```
+
+- 🔑 Keys are sealed in **Android KeyStore** — never exposed to memory unless actively decrypting
+- 🗄️ Vault metadata stored in **Room DB + SQLCipher** (database-level encryption)
+- 🚫 Vault files are **stripped from Android Gallery** and all OS scanners immediately on import
+
+---
+
+### 📱 &nbsp; App Locker with Fake Crash Screen
+
+> Lock any installed app. Confuse anyone who tries to open it.
+
+- Runs as a **background accessibility service**, monitoring foreground app changes
+- When a locked app is opened by an intruder, the screen is replaced with a **convincing "Application has stopped" crash dialog**
+- You bypass the overlay with a **secret gesture** known only to you
+
+---
+
+### 🕵️ &nbsp; Anti-Intruder Protocols
+
+| Feature | Description |
+|:---|:---|
+| 📸 **Intruder Selfie** | CameraX silently snaps a front photo on every wrong PIN |
+| 🪤 **Decoy PIN** | A second PIN that opens a clean, empty decoy vault |
+| 💥 **Emergency Wipe** | After 5 failed attempts, all vault data is permanently erased |
+| ⏱️ **Auto-Lock (Web)** | Web app locks after 3 minutes of inactivity |
+
+---
+
+## 🛠️ Tech Stack
+
+<br/>
+
+<table>
+<tr>
+<td valign="top" width="50%">
+
+### 📱 Android App
+
+| Layer | Technology |
+|:---|:---|
+| Language | Kotlin |
+| Architecture | MVVM + Clean Architecture |
+| UI | Material Design 3, Jetpack Nav |
+| Encryption | AES-256-GCM, Android KeyStore |
+| Database | Room DB + SQLCipher |
+| Dependency Injection | Hilt |
+| Camera | CameraX |
+| CI/CD | GitHub Actions |
+
+</td>
+<td valign="top" width="50%">
 
 ### 💻 Web Companion
-* **Development Language:** TypeScript
-* **Framework:** React 18
-* **Build System:** Vite
-* **Animations:** Framer Motion (for smooth micro-interactions, layout morphing)
-* **Icons:** Lucide React
-* **Styling:** CSS Variables (custom HSL color palette, Glassmorphism, Dark mode default)
+
+| Layer | Technology |
+|:---|:---|
+| Language | TypeScript |
+| Framework | React 18 |
+| Build Tool | Vite |
+| Animations | Framer Motion |
+| Icons | Lucide React |
+| Styling | Vanilla CSS (HSL variables) |
+| Design | Glassmorphism, Dark Mode |
+| Lock | Custom `useAutoLock` hook |
+
+</td>
+</tr>
+</table>
 
 ---
 
-## 📁 Project Directory Structure
+## 📁 Project Structure
 
-```text
-Vault-Calculator/
-├── app/                       # Android native application codebase
-│   ├── src/
-│   │   └── main/
-│   │       ├── java/com/stealthvault/app/
-│   │       │   ├── data/      # Repositories, Local DB (Room), Cryptography handlers
-│   │       │   ├── di/        # Dependency injection configuration (Hilt)
-│   │       │   ├── ui/        # UI components (Fake Calc, Lock Screen, Settings, Vault)
-│   │       │   └── utils/     # Diagnostic utilities, String operations
-│   │       └── res/           # UI Layout files, drawable resources, themes
-│   └── build.gradle.kts       # Gradle module build configuration
-├── web/                       # React + TS web companion application
-│   ├── src/
-│   │   ├── components/        # Decoy Calculator and Vault Sidebar components
-│   │   ├── hooks/             # Custom React hooks (auto-lock triggers)
-│   │   ├── App.tsx            # Application entry routing and viewport container
-│   │   └── index.css          # Core CSS variables, typography, and utility classes
-│   └── package.json           # Frontend dependencies and run scripts
-└── settings.gradle.kts        # Root gradle build configuration
+```
+Security-Vault/
+│
+├── 📱 app/                              ← Android application
+│   └── src/main/
+│       ├── java/com/stealthvault/app/
+│       │   ├── data/
+│       │   │   ├── local/              ← Room DB entities, DAOs, preferences
+│       │   │   ├── repository/         ← VaultRepository (file ops + encryption)
+│       │   │   └── security/           ← AES-256-GCM crypto engine
+│       │   ├── di/                     ← Hilt dependency injection modules
+│       │   ├── service/                ← App lock service, emergency wipe
+│       │   ├── ui/
+│       │   │   ├── fake/               ← Decoy Calculator Activity
+│       │   │   ├── lock/               ← PIN lock screen
+│       │   │   ├── vault/              ← Main vault fragments + ViewModel
+│       │   │   └── settings/           ← Decoy PIN, wipe config, preferences
+│       │   └── utils/                  ← Sensor security, helpers
+│       └── res/                        ← Layouts, drawables, themes
+│
+├── 💻 web/                              ← React + TS web companion
+│   └── src/
+│       ├── components/
+│       │   ├── DecoyCalculator.tsx     ← Full calculator UI + stealth trigger
+│       │   └── Sidebar.tsx             ← Vault navigation sidebar
+│       ├── hooks/
+│       │   └── useAutoLock.ts          ← Inactivity auto-lock hook
+│       ├── App.tsx                     ← Root app (lock/unlock state)
+│       └── index.css                   ← HSL design tokens + glassmorphism
+│
+└── ⚙️  build.gradle.kts                 ← Root Gradle configuration
 ```
 
 ---
 
 ## 🚀 Getting Started
 
-### Android App Setup
+### 📱 Android
 
-#### Prerequisites
-- Android Studio Jellyfish (or higher)
-- JDK 17
-- Android SDK 34 (Upside Down Cake) or higher
+**Requirements:** Android Studio Jellyfish+, JDK 17, Android SDK 34+
 
-#### Compilation Steps
-1. Clone this repository locally:
-   ```bash
-   git clone https://github.com/Subhan-Haider/Stealth-Vault.git
-   ```
-2. Open Android Studio and select **File > Open**, navigating to the cloned root repository folder.
-3. Allow Gradle to sync and download required dependencies.
-4. Click **Run** or build the APK via:
-   ```bash
-   ./gradlew assembleDebug
-   ```
-5. Find your generated APK at: `app/build/outputs/apk/debug/app-debug.apk`.
+```bash
+# 1. Clone the repo
+git clone https://github.com/Subhan-Haider/Security-Vault.git
 
-### Web Companion Setup
+# 2. Open in Android Studio → File > Open → select the repo root
+# 3. Wait for Gradle sync to complete
 
-#### Prerequisites
-- Node.js (version 18.x or higher)
-- npm or yarn
+# 4. Build the debug APK
+./gradlew assembleDebug
 
-#### Execution Steps
-1. Navigate to the web module directory:
-   ```bash
-   cd web
-   ```
-2. Install npm dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the local Vite development server:
-   ```bash
-   npm run dev
-   ```
-4. Access the web decoy interface in your browser at `http://localhost:5173`.
-5. Enter the passcode `1337` and press `=` to unlock the secure dashboard companion mock.
+# Output → app/build/outputs/apk/debug/app-debug.apk
+```
+
+---
+
+### 💻 Web Companion
+
+**Requirements:** Node.js 18+, npm
+
+```bash
+# 1. Enter the web directory
+cd web
+
+# 2. Install dependencies
+npm install
+
+# 3. Launch the dev server
+npm run dev
+
+# 4. Open in browser
+#    http://localhost:5173
+#
+#    Enter PIN: 1337  →  press =  →  vault unlocks
+```
 
 ---
 
 ## 🛡️ Security Architecture
 
-Stealth Vault relies on defense-in-depth principles:
+Stealth Vault uses **defense-in-depth** — multiple independent security layers:
 
-1. **Isolation**: Encrypted files are stored within the application's private directory (`/data/user/0/com.stealthvault.app/files/`), making them inaccessible to standard file explorer utilities or malware lacking root access.
-2. **Key Rotation**: Cryptographic keys are stored within the Android Keystore, isolated from the memory space of the main application. Decryption occurs on the fly inside memory only when active PIN credentials match.
-3. **Decoy Isolation**: Room DB utilizes a separate database name and encryption key configuration for the decoy profile, ensuring the primary vault schema remains zero-knowledge even if the decoy is active.
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these guidelines:
-- Fork the repository and create your feature branch.
-- Document any database schema updates.
-- Keep the decoy interface styling clean and consistent.
-- Submit a Pull Request describing your changes in detail.
+```
+┌─────────────────────────────────────────────────┐
+│                 LAYER 1 — OBSCURITY              │
+│   Calculator disguise, no visible vault UI       │
+├─────────────────────────────────────────────────┤
+│                 LAYER 2 — ACCESS CONTROL         │
+│   PIN verification, Decoy PIN, Auto-lock         │
+├─────────────────────────────────────────────────┤
+│                 LAYER 3 — ENCRYPTION             │
+│   AES-256-GCM keys inside Android KeyStore HSM   │
+│   SQLCipher encrypted database                   │
+├─────────────────────────────────────────────────┤
+│                 LAYER 4 — ANTI-FORENSICS         │
+│   Files hidden from OS, metadata stripped        │
+│   Intruder selfie, Emergency wipe on 5 failures  │
+└─────────────────────────────────────────────────┘
+```
 
 ---
 
 ## ⚖️ License
 
+<div align="center">
+
+**© 2026 Subhan Haider — All Rights Reserved**
+
 This project is released under a **Custom Proprietary License**.
 
-- 🚫 **No commercial use** — may not be published on any app store (Google Play, Apple App Store, etc.)
-- 🚫 **No redistribution** — may not be shared or distributed to third parties
-- 🚫 **No modification** — may not be altered, adapted, or used as a base for derivative works
-- ✅ **Personal study only** — viewing and private study of the source code is permitted
+| | Restriction |
+|:---:|:---|
+| 🚫 | No publishing to any app store (Google Play, Apple App Store, etc.) |
+| 🚫 | No redistribution or sharing with third parties |
+| 🚫 | No modification or creation of derivative works |
+| 🚫 | No commercial use of any kind |
+| ✅ | Personal viewing and private study is permitted |
 
-See the [LICENSE](LICENSE) file for the full terms and conditions.
+See the full [LICENSE](LICENSE) for details.
+
+<br/>
+
+---
+
+*Built with 🔐 by [Subhan Haider](https://github.com/Subhan-Haider)*
+
+</div>
