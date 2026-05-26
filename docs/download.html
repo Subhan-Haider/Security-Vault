@@ -149,9 +149,13 @@
     .warn-banner strong { color: var(--amber); }
 
     @media (max-width: 600px) {
-      .dl-card-main { flex-direction: column; text-align: center; }
+      .dl-card-main { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
       .dl-app-meta { justify-content: center; }
-      .dl-actions { justify-content: center; }
+      .dl-actions { flex-direction: column; }
+      .dl-actions .btn { width: 100%; justify-content: center; }
+      .warn-banner { flex-direction: column; text-align: center; align-items: center; }
+      .step-row { flex-direction: column; gap: 1rem; align-items: flex-start; }
+      .version-card { flex-direction: column; gap: 1rem; }
     }
   </style>
 </head>

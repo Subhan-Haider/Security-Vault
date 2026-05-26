@@ -85,6 +85,12 @@
       .feat-block { grid-template-columns: 1fr; gap: 2rem; }
       .feat-block.reverse { direction: ltr; }
     }
+    @media (max-width: 600px) {
+      .compare-table { display: block; overflow-x: auto; white-space: nowrap; }
+      .feat-panel { padding: 1.5rem; }
+      .crash-btns { flex-direction: column; }
+      .crash-btn { width: 100%; padding: 10px; }
+    }
   </style>
 </head>
 <body>
